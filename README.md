@@ -1,6 +1,8 @@
 # QQRedPackHelper
 Mac 系统下的QQ抢红包插件
 
+![](https://ws4.sinaimg.cn/large/006tNc79gy1fo7xnmoaltj30qm0mfq40.jpg)
+
 > 最近Mac版本的QQ增加了领取红包的功能，感觉比较好玩，所以搞了个自动抢红包的插件。主要hook了三个方法，如下：
 
  1. ```-[TChatWalletTransferViewController _updateUI]``` 消息界面刷新
