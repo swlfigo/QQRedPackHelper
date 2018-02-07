@@ -1,0 +1,337 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0ADF9AAB2026EB7E0048E625 /* QQRedPackHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 0ADF9AAA2026EB7E0048E625 /* QQRedPackHelper.h */; };
+		0ADF9AAD2026EB7E0048E625 /* QQRedPackHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ADF9AAC2026EB7E0048E625 /* QQRedPackHelper.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0ADF9AA52026EB7E0048E625 /* libQQRedPackHelper.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libQQRedPackHelper.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		0ADF9AA92026EB7E0048E625 /* put mac app here */ = {isa = PBXFileReference; lastKnownFileType = text; name = "put mac app here"; path = "TargetApp/put mac app here"; sourceTree = "<group>"; };
+		0ADF9AAA2026EB7E0048E625 /* QQRedPackHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QQRedPackHelper.h; sourceTree = "<group>"; };
+		0ADF9AAC2026EB7E0048E625 /* QQRedPackHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QQRedPackHelper.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		0ADF9AA12026EB7E0048E625 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0ADF9A9B2026EB7E0048E625 = {
+			isa = PBXGroup;
+			children = (
+				0ADF9AA72026EB7E0048E625 /* QQRedPackHelper */,
+				0ADF9AA62026EB7E0048E625 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		0ADF9AA62026EB7E0048E625 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0ADF9AA52026EB7E0048E625 /* libQQRedPackHelper.dylib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0ADF9AA72026EB7E0048E625 /* QQRedPackHelper */ = {
+			isa = PBXGroup;
+			children = (
+				0ADF9AAA2026EB7E0048E625 /* QQRedPackHelper.h */,
+				0ADF9AAC2026EB7E0048E625 /* QQRedPackHelper.m */,
+				0ADF9AA82026EB7E0048E625 /* TargetApp */,
+			);
+			path = QQRedPackHelper;
+			sourceTree = "<group>";
+		};
+		0ADF9AA82026EB7E0048E625 /* TargetApp */ = {
+			isa = PBXGroup;
+			children = (
+				0ADF9AA92026EB7E0048E625 /* put mac app here */,
+			);
+			name = TargetApp;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		0ADF9AA22026EB7E0048E625 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0ADF9AAB2026EB7E0048E625 /* QQRedPackHelper.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		0ADF9AA42026EB7E0048E625 /* QQRedPackHelper */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0ADF9AB02026EB7E0048E625 /* Build configuration list for PBXNativeTarget "QQRedPackHelper" */;
+			buildPhases = (
+				0ADF9AA02026EB7E0048E625 /* Sources */,
+				0ADF9AA12026EB7E0048E625 /* Frameworks */,
+				0ADF9AA22026EB7E0048E625 /* Headers */,
+				0ADF9AA32026EB7E0048E625 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = QQRedPackHelper;
+			productName = QQRedPackHelper;
+			productReference = 0ADF9AA52026EB7E0048E625 /* libQQRedPackHelper.dylib */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0ADF9A9C2026EB7E0048E625 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0910;
+				ORGANIZATIONNAME = tangxianhai;
+				TargetAttributes = {
+					0ADF9AA42026EB7E0048E625 = {
+						CreatedOnToolsVersion = 9.1;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 0ADF9A9F2026EB7E0048E625 /* Build configuration list for PBXProject "QQRedPackHelper" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 0ADF9A9B2026EB7E0048E625;
+			productRefGroup = 0ADF9AA62026EB7E0048E625 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				0ADF9AA42026EB7E0048E625 /* QQRedPackHelper */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0ADF9AA32026EB7E0048E625 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = /opt/MonkeyDev/Tools/packformac.sh;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0ADF9AA02026EB7E0048E625 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0ADF9AAD2026EB7E0048E625 /* QQRedPackHelper.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		0ADF9AAE2026EB7E0048E625 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(MonkeyDevPath)/FrameworksForMac",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(MonkeyDevPath)/FrameworksForMac",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				MonkeyDevPath = /opt/MonkeyDev;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		0ADF9AAF2026EB7E0048E625 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(MonkeyDevPath)/FrameworksForMac",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(MonkeyDevPath)/FrameworksForMac",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MonkeyDevPath = /opt/MonkeyDev;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		0ADF9AB12026EB7E0048E625 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = SM7A83699N;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				EXECUTABLE_PREFIX = lib;
+				INSTALL_PATH = "@executable_path/libQQRedPackHelper.dylib";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-lsubstitute",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		0ADF9AB22026EB7E0048E625 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = SM7A83699N;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				EXECUTABLE_PREFIX = lib;
+				INSTALL_PATH = "@executable_path/libQQRedPackHelper.dylib";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-lsubstitute",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0ADF9A9F2026EB7E0048E625 /* Build configuration list for PBXProject "QQRedPackHelper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0ADF9AAE2026EB7E0048E625 /* Debug */,
+				0ADF9AAF2026EB7E0048E625 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0ADF9AB02026EB7E0048E625 /* Build configuration list for PBXNativeTarget "QQRedPackHelper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0ADF9AB12026EB7E0048E625 /* Debug */,
+				0ADF9AB22026EB7E0048E625 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0ADF9A9C2026EB7E0048E625 /* Project object */;
+}
