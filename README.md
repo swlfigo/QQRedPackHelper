@@ -16,7 +16,8 @@ Mac 系统下的QQ抢红包插件，两种方式实现抢红包操作，一种�
 > 支持群和个人红包，自动执行抢操作。
 
 #### 注意：
-想要自己编译项目，需要安装 [MonkeyDev](https://github.com/AloneMonkey/MonkeyDev)
+1. 助手设置选项控件位置可能不太对，只需要拖动调整QQ窗口大小即可更新助手设置控件位置
+2. 想要自己编译项目，需要安装 [MonkeyDev](https://github.com/AloneMonkey/MonkeyDev)
 
 #### 最后：为了方便安装，打包了动态库和所需工具，[下载地址](https://pan.baidu.com/s/1ggYSUEB)，密码:hyl0。
 > 用法：下载完成后解压，将所有文件放到最新版QQ(测试用的是V6.3.0-32293)的MacOS文件目录下。如果QQ默认安装在应用程序目录中，那么该目录为 /Applications/QQ.app/Contents/MacOS/，然后打开控制台，
