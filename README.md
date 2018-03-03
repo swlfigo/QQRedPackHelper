@@ -1,10 +1,10 @@
 # QQRedPackHelper
-Mac 系统下的QQ抢红包神器！更新到2.1版啦！修复了之前的一些bug，比如最近一条消息不能显示的问题，然后优化了助手设置界面，改为菜单栏方式设置，新增消息防撤回功能，也能在菜单栏进行设置。
+> Mac 系统下的QQ抢红包神器！更新到2.1版啦！修复了之前的一些bug，比如最近一条消息不能显示的问题，然后优化了助手设置界面，改为菜单栏方式设置，新增消息防撤回功能，也能在菜单栏进行设置。
 
 # 安装方法
-1. 为了方便安装，打包了动态库和所需工具，[下载地址](https://pan.baidu.com/s/1i6dZfXN)，密码:38sb。
-2. 下载完成后解压，将所有文件放到最新版QQ(测试用的是V6.3.0-32337)的MacOS文件目录下。如果QQ默认安装在应用程序目录中，那么该目录为` /Applications/QQ.app/Contents/MacOS/`
-3. 打开控制台，执行命令 ```cd /Applications/QQ.app/Contents/MacOS/``` ```sh redPack.sh``` 命令，重启QQ就可以了！
+> 1. 为了方便安装，打包了动态库和所需工具，[下载地址](https://pan.baidu.com/s/1i6dZfXN)，密码:38sb。
+> 2. 下载完成后解压，将所有文件放到最新版QQ(测试用的是V6.3.0-32337)的MacOS文件目录下。如果QQ默认安装在应用程序目录中，那么该目录为` /Applications/QQ.app/Contents/MacOS/`
+> 3. 打开控制台，执行命令 ```cd /Applications/QQ.app/Contents/MacOS/``` ```sh redPack.sh``` 命令，重启QQ就可以了！
 
 ![](https://ws2.sinaimg.cn/large/006tNc79ly1fozons6ttzj30o30iagmu.jpg)
 
