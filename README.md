@@ -6,9 +6,9 @@
 > 2. 下载完成后解压，将所有文件放到最新版QQ(测试用的是V6.3.0-32337)的MacOS文件目录下。如果QQ默认安装在应用程序目录中，那么该目录为` /Applications/QQ.app/Contents/MacOS/`
 > 3. 打开控制台，执行命令 ```cd /Applications/QQ.app/Contents/MacOS/``` ```sh redPack.sh``` 命令，重启QQ就可以了！
 
+# 效果图
 ![](https://ws2.sinaimg.cn/large/006tNc79ly1fozons6ttzj30o30iagmu.jpg)
 
-# 效果图
 > 自动抢红包的插件，hook了四个方法，如下：
 
  1. ```-[TChatWalletTransferViewController _updateUI]``` 消息界面刷新，当前最新消息，在消息聊天界面最底部时候才调用
