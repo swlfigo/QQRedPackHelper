@@ -8,6 +8,7 @@
 
 ![](https://ws2.sinaimg.cn/large/006tNc79ly1fozons6ttzj30o30iagmu.jpg)
 
+# 效果图
 > 自动抢红包的插件，hook了四个方法，如下：
 
  1. ```-[TChatWalletTransferViewController _updateUI]``` 消息界面刷新，当前最新消息，在消息聊天界面最底部时候才调用
