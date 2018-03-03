@@ -71,10 +71,12 @@ static id new_BHMsgListManager_getMessageKey(BHMsgListManager* self,SEL _cmd, id
             int mType = [[msgKey valueForKey:@"_msgType"] intValue];
             if (mType == 311) {
                 // 红包消息
-                [redPackHelper performSelector:@selector(openRedPackWithMsgModel:operation:) withObject:msgKey withObject:@(0)];
-                id content = [msgKey performSelector:@selector(content)];
-                [QQHelperNotification showNotificationWithTitle:@"红包助手提示" content:@"抢到红包😝😝😝"];
-                NSLog(@"QQRedPackHelper：抢到红包 %@ ---- 详细信息: %@",msgKey,content);
+                dispatch_async(dispatch_get_main_queue(),^{
+                    [redPackHelper performSelector:@selector(openRedPackWithMsgModel:operation:) withObject:msgKey withObject:@(0)];
+                    id content = [msgKey performSelector:@selector(content)];
+                    [QQHelperNotification showNotificationWithTitle:@"红包助手提示" content:@"抢到红包😝😝😝"];
+                    NSLog(@"QQRedPackHelper：抢到红包 %@ ---- 详细信息: %@",msgKey,content);
+                });
             }
         }
     }
@@ -126,10 +128,12 @@ static void __attribute__((constructor)) initialize(void) {
     // 模拟抢红包 - 通用 - 比较慢，每次刷新UI都要变化弹框 弃用
 //    MSHookMessageEx(objc_getClass("TChatWalletTransferViewController"), @selector(_updateUI), (IMP)&new_TChatWalletTransferViewController_updateUI, (IMP *)&origin_TChatWalletTransferViewController_updateUI);
     
-    // 消息滚到底部 - 才会自动刷新UI
+//     消息滚到底部 - 才会自动刷新UI
     MSHookMessageEx(objc_getClass("MQAIOChatViewController"), @selector(handleAppendNewMsg:), (IMP)&new_MQAIOChatViewController_handleAppendNewMsg, (IMP *)&origin_MQAIOChatViewController_handleAppendNewMsg);
     
-    // 模拟抢红包方式二，底层调用
+    // 自动关闭红包弹框
      MSHookMessageEx(objc_getClass("RedPackViewController"), @selector(viewDidLoad), (IMP)&new_RedPackViewController_viewDidLoad, (IMP *)&origin_RedPackViewController_viewDidLoad);
+    
+    // 模拟抢红包方式二，底层调用
     MSHookMessageEx(objc_getClass("BHMsgListManager"), @selector(getMessageKey:), (IMP)&new_BHMsgListManager_getMessageKey, (IMP *)&origin_BHMsgListManager_getMessageKey);
 }

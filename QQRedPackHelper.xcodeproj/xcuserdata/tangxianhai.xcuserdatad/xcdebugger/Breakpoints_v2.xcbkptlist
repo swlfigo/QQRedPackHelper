@@ -15,10 +15,8 @@
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "___lldb_unnamed_symbol11077$$QQ"
-                  moduleName = "QQ"
                   usesParentBreakpointCondition = "Yes"
-                  offsetFromSymbolStart = "7224">
+                  offsetFromSymbolStart = "0">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -35,10 +33,8 @@
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "___lldb_unnamed_symbol11077$$QQ"
-                  moduleName = "QQ"
                   usesParentBreakpointCondition = "Yes"
-                  offsetFromSymbolStart = "7230">
+                  offsetFromSymbolStart = "0">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -55,10 +51,8 @@
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "___lldb_unnamed_symbol11077$$QQ"
-                  moduleName = "QQ"
                   usesParentBreakpointCondition = "Yes"
-                  offsetFromSymbolStart = "7261">
+                  offsetFromSymbolStart = "0">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -75,10 +69,8 @@
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "___lldb_unnamed_symbol11077$$QQ"
-                  moduleName = "QQ"
                   usesParentBreakpointCondition = "Yes"
-                  offsetFromSymbolStart = "7327">
+                  offsetFromSymbolStart = "0">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -95,10 +87,8 @@
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "___lldb_unnamed_symbol11077$$QQ"
-                  moduleName = "QQ"
                   usesParentBreakpointCondition = "Yes"
-                  offsetFromSymbolStart = "7362">
+                  offsetFromSymbolStart = "0">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -115,10 +105,8 @@
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "___lldb_unnamed_symbol11077$$QQ"
-                  moduleName = "QQ"
                   usesParentBreakpointCondition = "Yes"
-                  offsetFromSymbolStart = "7613">
+                  offsetFromSymbolStart = "0">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -135,10 +123,8 @@
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "___lldb_unnamed_symbol11077$$QQ"
-                  moduleName = "QQ"
                   usesParentBreakpointCondition = "Yes"
-                  offsetFromSymbolStart = "7640">
+                  offsetFromSymbolStart = "0">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -155,10 +141,8 @@
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "___lldb_unnamed_symbol11077$$QQ"
-                  moduleName = "QQ"
                   usesParentBreakpointCondition = "Yes"
-                  offsetFromSymbolStart = "7667">
+                  offsetFromSymbolStart = "0">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -175,10 +159,8 @@
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "___lldb_unnamed_symbol11077$$QQ"
-                  moduleName = "QQ"
                   usesParentBreakpointCondition = "Yes"
-                  offsetFromSymbolStart = "7536">
+                  offsetFromSymbolStart = "0">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -195,10 +177,8 @@
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "___lldb_unnamed_symbol11077$$QQ"
-                  moduleName = "QQ"
                   usesParentBreakpointCondition = "Yes"
-                  offsetFromSymbolStart = "7542">
+                  offsetFromSymbolStart = "0">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -215,10 +195,8 @@
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "___lldb_unnamed_symbol11077$$QQ"
-                  moduleName = "QQ"
                   usesParentBreakpointCondition = "Yes"
-                  offsetFromSymbolStart = "7576">
+                  offsetFromSymbolStart = "0">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -235,10 +213,8 @@
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "___lldb_unnamed_symbol11077$$QQ"
-                  moduleName = "QQ"
                   usesParentBreakpointCondition = "Yes"
-                  offsetFromSymbolStart = "7646">
+                  offsetFromSymbolStart = "0">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -255,10 +231,8 @@
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "___lldb_unnamed_symbol11077$$QQ"
-                  moduleName = "QQ"
                   usesParentBreakpointCondition = "Yes"
-                  offsetFromSymbolStart = "7673">
+                  offsetFromSymbolStart = "0">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -275,28 +249,10 @@
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "___lldb_unnamed_symbol11077$$QQ"
-                  moduleName = "QQ"
                   usesParentBreakpointCondition = "Yes"
-                  offsetFromSymbolStart = "7708">
+                  offsetFromSymbolStart = "0">
                </Location>
             </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "QQRedPackHelper/QQRedPackHelper.m"
-            timestampString = "541762584.433997"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "67"
-            endingLineNumber = "67"
-            landmarkName = "new_BHMsgListManager_getMessageKey"
-            landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
