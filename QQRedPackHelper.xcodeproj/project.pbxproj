@@ -7,11 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A947F65204A42C8000A681C /* QQHelperNotification.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A947F63204A42C8000A681C /* QQHelperNotification.h */; };
+		0A947F66204A42C8000A681C /* QQHelperNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A947F64204A42C8000A681C /* QQHelperNotification.m */; };
+		0AD9070D2049957200F9E441 /* QQHelperMenu.h in Headers */ = {isa = PBXBuildFile; fileRef = 0AD9070B2049957200F9E441 /* QQHelperMenu.h */; };
+		0AD9070E2049957200F9E441 /* QQHelperMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AD9070C2049957200F9E441 /* QQHelperMenu.m */; };
+		0AD9123C2049A05D00F9E441 /* QQHelperSetting.h in Headers */ = {isa = PBXBuildFile; fileRef = 0AD9123A2049A05D00F9E441 /* QQHelperSetting.h */; };
+		0AD9123D2049A05D00F9E441 /* QQHelperSetting.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AD9123B2049A05D00F9E441 /* QQHelperSetting.m */; };
 		0ADF9AAB2026EB7E0048E625 /* QQRedPackHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 0ADF9AAA2026EB7E0048E625 /* QQRedPackHelper.h */; };
 		0ADF9AAD2026EB7E0048E625 /* QQRedPackHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ADF9AAC2026EB7E0048E625 /* QQRedPackHelper.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0A947F63204A42C8000A681C /* QQHelperNotification.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QQHelperNotification.h; sourceTree = "<group>"; };
+		0A947F64204A42C8000A681C /* QQHelperNotification.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QQHelperNotification.m; sourceTree = "<group>"; };
+		0AD9070B2049957200F9E441 /* QQHelperMenu.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QQHelperMenu.h; sourceTree = "<group>"; };
+		0AD9070C2049957200F9E441 /* QQHelperMenu.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QQHelperMenu.m; sourceTree = "<group>"; };
+		0AD9123A2049A05D00F9E441 /* QQHelperSetting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QQHelperSetting.h; sourceTree = "<group>"; };
+		0AD9123B2049A05D00F9E441 /* QQHelperSetting.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QQHelperSetting.m; sourceTree = "<group>"; };
 		0ADF9AA52026EB7E0048E625 /* libQQRedPackHelper.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libQQRedPackHelper.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		0ADF9AA92026EB7E0048E625 /* put mac app here */ = {isa = PBXFileReference; lastKnownFileType = text; name = "put mac app here"; path = "TargetApp/put mac app here"; sourceTree = "<group>"; };
 		0ADF9AAA2026EB7E0048E625 /* QQRedPackHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QQRedPackHelper.h; sourceTree = "<group>"; };
@@ -50,6 +62,12 @@
 			children = (
 				0ADF9AAA2026EB7E0048E625 /* QQRedPackHelper.h */,
 				0ADF9AAC2026EB7E0048E625 /* QQRedPackHelper.m */,
+				0AD9070B2049957200F9E441 /* QQHelperMenu.h */,
+				0AD9070C2049957200F9E441 /* QQHelperMenu.m */,
+				0AD9123A2049A05D00F9E441 /* QQHelperSetting.h */,
+				0AD9123B2049A05D00F9E441 /* QQHelperSetting.m */,
+				0A947F63204A42C8000A681C /* QQHelperNotification.h */,
+				0A947F64204A42C8000A681C /* QQHelperNotification.m */,
 				0ADF9AA82026EB7E0048E625 /* TargetApp */,
 			);
 			path = QQRedPackHelper;
@@ -70,7 +88,10 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0AD9123C2049A05D00F9E441 /* QQHelperSetting.h in Headers */,
+				0A947F65204A42C8000A681C /* QQHelperNotification.h in Headers */,
 				0ADF9AAB2026EB7E0048E625 /* QQRedPackHelper.h in Headers */,
+				0AD9070D2049957200F9E441 /* QQHelperMenu.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -148,6 +169,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0AD9123D2049A05D00F9E441 /* QQHelperSetting.m in Sources */,
+				0AD9070E2049957200F9E441 /* QQHelperMenu.m in Sources */,
+				0A947F66204A42C8000A681C /* QQHelperNotification.m in Sources */,
 				0ADF9AAD2026EB7E0048E625 /* QQRedPackHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

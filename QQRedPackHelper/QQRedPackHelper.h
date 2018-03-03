@@ -11,4 +11,5 @@
 
 #import <Foundation/Foundation.h>
 #import <AppKit/AppKit.h>
-
+#import "QQHelperMenu.h"
+#import "QQHelperNotification.h"
