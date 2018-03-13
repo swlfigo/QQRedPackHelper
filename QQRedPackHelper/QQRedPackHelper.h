@@ -13,3 +13,4 @@
 #import <AppKit/AppKit.h>
 #import "QQHelperMenu.h"
 #import "QQHelperNotification.h"
+#import "QQHelperDependent.h"

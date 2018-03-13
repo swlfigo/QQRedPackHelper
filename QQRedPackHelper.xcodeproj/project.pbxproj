@@ -18,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0A144D622051140C00800B74 /* QQHelperDependent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QQHelperDependent.h; sourceTree = "<group>"; };
 		0A947F63204A42C8000A681C /* QQHelperNotification.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QQHelperNotification.h; sourceTree = "<group>"; };
 		0A947F64204A42C8000A681C /* QQHelperNotification.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QQHelperNotification.m; sourceTree = "<group>"; };
 		0AD9070B2049957200F9E441 /* QQHelperMenu.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QQHelperMenu.h; sourceTree = "<group>"; };
@@ -60,6 +61,7 @@
 		0ADF9AA72026EB7E0048E625 /* QQRedPackHelper */ = {
 			isa = PBXGroup;
 			children = (
+				0A144D622051140C00800B74 /* QQHelperDependent.h */,
 				0ADF9AAA2026EB7E0048E625 /* QQRedPackHelper.h */,
 				0ADF9AAC2026EB7E0048E625 /* QQRedPackHelper.m */,
 				0AD9070B2049957200F9E441 /* QQHelperMenu.h */,
@@ -304,7 +306,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = LRT8XR3J88;
+				DEVELOPMENT_TEAM = SM7A83699N;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				EXECUTABLE_PREFIX = lib;
@@ -321,7 +323,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = LRT8XR3J88;
+				DEVELOPMENT_TEAM = SM7A83699N;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				EXECUTABLE_PREFIX = lib;

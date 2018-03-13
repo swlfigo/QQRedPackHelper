@@ -14,7 +14,7 @@
 #import "QQHelperSetting.h"
 
 @class MQAIOChatViewController;
-@class QQMessageRevokeEngine;
+//@class QQMessageRevokeEngine;
 
 @class BHMsgListManager;
 @class AppController;
@@ -96,8 +96,14 @@ static void new_MQAIOChatViewController_revokeMessages(MQAIOChatViewController* 
     }
 }
 
-static void (*origin_QQMessageRevokeEngine_handleRecallNotify_isOnline)(QQMessageRevokeEngine*,SEL,void*,BOOL);
-static void new_QQMessageRevokeEngine_handleRecallNotify_isOnline(QQMessageRevokeEngine* self,SEL _cmd,void* notify,BOOL isOnline){
+static void (*origin_QQMessageRevokeEngine_handleRecallNotify_isOnline)(QQMessageRevokeEngine*,SEL,void * ,BOOL);
+static void new_QQMessageRevokeEngine_handleRecallNotify_isOnline(QQMessageRevokeEngine* self,SEL _cmd,void * notify,BOOL isOnline){
+
+    QQMessageRevokeEngine *revokeEngine = self;
+    RecallProcessor *processor = [revokeEngine getProcessor];
+    
+    id content = [processor getRecallMessageContent:notify];
+    
     if (![[QQHelperSetting sharedInstance] isMessageRevoke]) {
         origin_QQMessageRevokeEngine_handleRecallNotify_isOnline(self,_cmd,notify,isOnline);
     }
@@ -113,6 +119,11 @@ static void new_RedPackViewController_viewDidLoad(RedPackViewController* self,SE
     }
 }
 
+static void (*origin_MsgDbService_updateQQMessageModel)(RedPackViewController*,SEL,id,id);
+static void new_MsgDbService_updateQQMessageModel(RedPackViewController* self,SEL _cmd,id a3,id a4) {
+    origin_MsgDbService_updateQQMessageModel(self,_cmd,a3,a4);
+}
+
 static void __attribute__((constructor)) initialize(void) {
     
     NSLog(@"QQRedPackHelper：抢红包插件2.0 开启 ----------------------------------");
@@ -120,7 +131,7 @@ static void __attribute__((constructor)) initialize(void) {
     // 消息防撤回
     MSHookMessageEx(objc_getClass("MQAIOChatViewController"),  @selector(revokeMessages:), (IMP)&new_MQAIOChatViewController_revokeMessages, (IMP*)&origin_MQAIOChatViewController_revokeMessages);
     
-    MSHookMessageEx(objc_getClass("QQMessageRevokeEngine"),  @selector(handleRecallNotify:isOnline:), (IMP)&new_QQMessageRevokeEngine_handleRecallNotify_isOnline, (IMP*)&origin_QQMessageRevokeEngine_handleRecallNotify_isOnline);
+//    MSHookMessageEx(objc_getClass("QQMessageRevokeEngine"),  @selector(handleRecallNotify:isOnline:), (IMP)&new_QQMessageRevokeEngine_handleRecallNotify_isOnline, (IMP*)&origin_QQMessageRevokeEngine_handleRecallNotify_isOnline);
     
     // 助手设置菜单
     MSHookMessageEx(objc_getClass("AppController"), @selector(applicationDidFinishLaunching:), (IMP)&new_AppController_applicationDidFinishLaunching, (IMP *)&origin_AppController_applicationDidFinishLaunching);
@@ -136,4 +147,7 @@ static void __attribute__((constructor)) initialize(void) {
     
     // 模拟抢红包方式二，底层调用
     MSHookMessageEx(objc_getClass("BHMsgListManager"), @selector(getMessageKey:), (IMP)&new_BHMsgListManager_getMessageKey, (IMP *)&origin_BHMsgListManager_getMessageKey);
+    
+    // 模拟抢红包方式二，底层调用
+    MSHookMessageEx(objc_getClass("MsgDbService"), @selector(updateQQMessageModel:keyArray:), (IMP)&new_MsgDbService_updateQQMessageModel, (IMP *)&origin_MsgDbService_updateQQMessageModel);
 }
