@@ -19,13 +19,6 @@
 
 ### 效果图
 ![](https://ws2.sinaimg.cn/large/006tNc79ly1fozons6ttzj30o30iagmu.jpg)
-
-> 自动抢红包的插件，hook了四个方法，如下：
-
- 1. ```-[TChatWalletTransferViewController _updateUI]``` 消息界面刷新，当前最新消息，在消息聊天界面最底部时候才调用
- 2. ```-[MQAIOChatViewController handleAppendNewMsg:]``` 收到新的消息，并且消息界面的最新一条消息，不在最底部时候调用
- 3. ```-[MQAIOTopBarViewController awakeFromNib]``` 添加聊天界面顶部*助手功能*选项
- 4. ```-[BHMsgListManager getMessageKey:]``` 收到新消息，收到就会调用该方法，新增抢红包方式也在此方法中处理。
  
 ### 功能:
 > 红包自动抢？ 支持群和个人红包，包括口令-文字红包，自动执行抢操作。
