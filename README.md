@@ -11,6 +11,7 @@
 > 3. 新增红包关键字过滤。
 > 4. 新增抢红包随机范围内时间延迟。
 > 5. 新增一种注入的脚本（为了解决签名版QQ和未签名版消息历史记录不一致和本地表情加载失败问题）。
+> 6. 新增是否抢个人红包开关，默认为打开状态。
 
 #### V2.21
 > 参考Mac微信助手的安装脚本，更改安装方式，新增插件卸载脚本，已支持APP Store应用商店下载版本注入。
@@ -40,10 +41,6 @@
 ![](https://ws3.sinaimg.cn/large/006tKfTcgy1fpem7ygxofj30hd0nin0d.jpg)
 
 图 1-2
-
-![](https://ws3.sinaimg.cn/large/006tKfTcgy1fpem8oib7fj30k40nkwh2.jpg)
-
-图 1-3
 
 ![](https://ws1.sinaimg.cn/large/006tKfTcgy1fpem9bv7kzj30ie0olgop.jpg)
  
