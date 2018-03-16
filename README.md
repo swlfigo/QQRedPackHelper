@@ -32,7 +32,8 @@
 注意：这种方式注入启动，不会破坏QQ自身的签名，这是为了消息历史记录不一致和本地表情加载失败问题。
 
 ### 卸载
-打开控制台窗口，执行Other目录中的`Uninstall.sh`文件，如：`sh Uninstall.sh`，只针对采用方式1安装卸载！方式二安装，需要手动去 `/etc/profile`目录删除下面两行代码： 
+> 1. 打开控制台窗口，执行Other目录中的`Uninstall.sh`文件，如：`sh Uninstall.sh`，只针对采用方式1安装卸载！
+> 2. 采用方式二安装，需要手动去 `/etc/profile`目录删除下面两行代码： 
 ```
 alias qq='sh /Applications/QQ.app/Contents/MacOS/injectionQQ.sh'
 alias QQ='sh /Applications/QQ.app/Contents/MacOS/injectionQQ.sh'
