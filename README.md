@@ -34,7 +34,7 @@ Mac系统下的QQ抢红包神器，支持群和个人红包，包括文字口令
 
 ### 方式2
 
-打开控制台窗口，执行Other目录中的`SignatureInstall.sh`文件，如：`sh SignatureInstall.sh`，然后关闭控制台，再新打开一个控制台，
+打开控制台窗口，执行Other目录中的`SignatureInstall.sh`文件，要以管理员权限执行：`sudo sh SignatureInstall.sh`，然后关闭控制台，再新打开一个控制台，
 输入QQ或是qq都可以启动注入后的应用程序。
 注意：这种方式注入启动，不会破坏QQ自身的签名，这是为了消息历史记录不一致和本地表情加载失败问题。
 
