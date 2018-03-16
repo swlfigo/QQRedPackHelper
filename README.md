@@ -54,7 +54,7 @@ alias QQ='sh /Applications/QQ.app/Contents/MacOS/injectionQQ.sh'
 
 图 1-2
 
-![](https://ws1.sinaimg.cn/large/006tKfTcgy1fpem9bv7kzj30ie0olgop.jpg)
+![](https://ws1.sinaimg.cn/large/006tKfTcgy1fperjoscjvj30f50kjabg.jpg)
  
 ## 功能:
 > 红包自动抢？ 支持群和个人红包，包括口令-文字红包，自动执行抢操作。
