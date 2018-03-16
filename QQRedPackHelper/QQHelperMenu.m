@@ -8,7 +8,9 @@
 
 #import "QQHelperMenu.h"
 
-@implementation QQHelperMenu
+@implementation QQHelperMenu {
+    QQHelperSettingWindowCtr *settingWc;
+}
 
 static QQHelperMenu *instance = nil;
 
@@ -78,6 +80,17 @@ static QQHelperMenu *instance = nil;
         [subMenu addItem:hideRedPacWindowItem];
     }
     
+    {
+        NSMenuItem *separatorItem3 = [NSMenuItem separatorItem];
+        [subMenu addItem:separatorItem3];
+    }
+    
+    {
+        NSMenuItem *settingWindowItem = [[NSMenuItem alloc] initWithTitle:@"助手设置选项" action:@selector(settingWindowNoUIAction:) keyEquivalent:@"P"];
+        [settingWindowItem setTarget:self];
+        [subMenu addItem:settingWindowItem];
+    }
+    
     [oneItem setSubmenu:subMenu];
     //更新
     [NSApp setMainMenu:mainMenu];
@@ -117,6 +130,13 @@ static QQHelperMenu *instance = nil;
         [menuItem setState:NSControlStateValueOn];
         [[QQHelperSetting sharedInstance] setIsMessageRevoke:YES];
     }
+}
+
+// 助手设置选项
+- (void)settingWindowNoUIAction:(NSMenuItem *)menuItem {
+    NSLog(@"settingWindowNoUIAction");
+    settingWc = [[QQHelperSettingWindowCtr alloc] init];
+    [settingWc showDefaultWindow];
 }
 
 @end

@@ -14,3 +14,4 @@
 #import "QQHelperMenu.h"
 #import "QQHelperNotification.h"
 #import "QQHelperDependent.h"
+#import "RedPackSettingMenuItem.h"

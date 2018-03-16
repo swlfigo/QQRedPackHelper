@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <Cocoa/Cocoa.h>
 #import "QQHelperSetting.h"
+#import "QQHelperSettingWindowCtr.h"
 
 @interface QQHelperMenu : NSObject
 + (instancetype)sharedInstance;
