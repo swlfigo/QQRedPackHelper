@@ -22,6 +22,8 @@
     NSButton *updateFilterBtn;
     
     NSBox *hLine2;
+    
+    NSButton *grabPersonRedPacBtn;
 }
 
 - (instancetype)initWithFrame:(NSRect)frameRect {
@@ -91,7 +93,7 @@
         [inputFilterTxt sizeToFit];
         inputFilterTxt.font = [NSFont systemFontOfSize:14];
         NSString *keyword = [[QQHelperSetting sharedInstance] filterKeyword];
-        inputFilterTxt.stringValue = keyword ? keyword : @"外挂,测试";
+        inputFilterTxt.stringValue = keyword ? keyword : @"";
         inputFilterTxt.placeholderString = @"关键字之间用逗号分隔";
         [self addSubview:inputFilterTxt];
     }
@@ -111,6 +113,17 @@
         [self addSubview:hLine2];
     }
     
+    // 第三排
+    {
+        grabPersonRedPacBtn = [NSButton checkboxWithTitle:@"是否抢个人红包" target:self action:NSSelectorFromString(@"updatePersonRedPac:")];
+        if ([[QQHelperSetting sharedInstance] isPersonRedPackage]) {
+            grabPersonRedPacBtn.state = NSControlStateValueOn;
+        } else {
+            grabPersonRedPacBtn.state = NSControlStateValueOff;
+        }
+        [grabPersonRedPacBtn sizeToFit];
+        [self addSubview:grabPersonRedPacBtn];
+    }
 }
 
 - (void)addConstraintInit {
@@ -176,6 +189,12 @@
         make.left.mas_equalTo(filterLable.mas_left);
         make.right.mas_equalTo(self.mas_right).with.offset(-20);
     }];
+    
+    [grabPersonRedPacBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(hLine2.mas_bottom).with.offset(24);
+        make.left.mas_equalTo(filterLable.mas_left);
+    }];
+
 }
 
 - (void)updateRedTimeConfig:(NSButton *)btn {
@@ -197,6 +216,14 @@
     }
     [[QQHelperSetting sharedInstance] setFilterKeyword:inputFilterTxt.stringValue];
     [[QQHelperSetting sharedInstance] showMessage:@"过滤关键字更新成功"];
+}
+
+- (void)updatePersonRedPac:(NSButton *)btn {
+    if (grabPersonRedPacBtn.state == NSControlStateValueOff) {
+        [[QQHelperSetting sharedInstance] setIsPersonRedPackage:NO];
+    } else {
+        [[QQHelperSetting sharedInstance] setIsPersonRedPackage:YES];
+    }
 }
 
 @end

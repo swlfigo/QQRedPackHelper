@@ -18,6 +18,7 @@
 @property (nonatomic, assign) BOOL isEnableRedPacket;
 @property (nonatomic, assign) BOOL isHideRedDetailWindow;
 @property (nonatomic, assign) BOOL isMessageRevoke;
+@property (nonatomic, assign) BOOL isPersonRedPackage;
 
 @property (nonatomic, assign) NSInteger startTime;
 @property (nonatomic, assign) NSInteger endTime;
@@ -43,7 +44,5 @@
 
 - (BOOL)keywordContainer:(NSString *)redPackKeyword;
 - (BOOL)groupSessionIdContainer:(NSInteger)sessionId;
-
-//- (BOOL)removeGroupById:(NSInteger)sessionId;
 
 @end

@@ -23,6 +23,7 @@ static NSString *msgRandomKey = @"txh_msgRandomKey";
 static NSString *filterKeywordKey = @"txh_filterKeywordKey";
 
 static NSString *groupSessionIdsKey = @"txh_groupSessionIdsKey";
+static NSString *personRedPacKey = @"txh_personRedPacKey";
 
 static QQHelperSetting *instance = nil;
 
@@ -33,6 +34,18 @@ static QQHelperSetting *instance = nil;
         instance = [[[self class] alloc] init];
     });
     return instance;
+}
+
+- (BOOL)isPersonRedPackage {
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:personRedPacKey] != nil) {
+        BOOL enable = [[[NSUserDefaults standardUserDefaults] objectForKey:personRedPacKey]boolValue];
+        return enable;
+    }
+    return true;
+}
+
+- (void)setIsPersonRedPackage:(BOOL)isPersonRedPac {
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:isPersonRedPac] forKey:personRedPacKey];
 }
 
 - (NSNumber *)msgRandom {
@@ -196,6 +209,9 @@ static QQHelperSetting *instance = nil;
         return NO;
     }
     NSString *localKeyword = [self filterKeyword];
+    if (localKeyword == nil) {
+        return NO;
+    }
     if (![localKeyword containsString:@","] && ![localKeyword containsString:@"，"]) {
         // 单个字符
         return [redPackKeyword containsString:localKeyword];

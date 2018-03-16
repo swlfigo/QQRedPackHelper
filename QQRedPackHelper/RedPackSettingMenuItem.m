@@ -22,7 +22,7 @@ static RedPackSettingMenuItem *instance = nil;
 }
 
 - (NSMenuItem *)redPacSettingItem {
-    NSMenuItem *redPacItem = [[NSMenuItem alloc] initWithTitle:@"群开启抢红包" action:@selector(openRedPackSettingAction) keyEquivalent:@""];
+    NSMenuItem *redPacItem = [[NSMenuItem alloc] initWithTitle:@"群禁止抢红包" action:@selector(openRedPackSettingAction) keyEquivalent:@""];
     [redPacItem setTarget:self];
     return redPacItem;
 }
