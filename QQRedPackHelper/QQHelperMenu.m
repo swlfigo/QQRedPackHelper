@@ -8,8 +8,11 @@
 
 #import "QQHelperMenu.h"
 
+static char tkAutoReplyWindowControllerKey;         //  自动回复窗口的关联 key
+
 @implementation QQHelperMenu {
     QQHelperSettingWindowCtr *settingWc;
+    TKAutoReplyWindowController *autoReplyWc;
 }
 
 static QQHelperMenu *instance = nil;
@@ -35,7 +38,6 @@ static QQHelperMenu *instance = nil;
     
     //添加二级目录项
     NSMenu *subMenu = [[NSMenu alloc] initWithTitle:@"QQ助手"];
-    
     {
         NSMenuItem *redPackItem = [[NSMenuItem alloc] initWithTitle:@"自动抢红包" action:@selector(grabbingRedPacketsAction:) keyEquivalent:@"A"];
         if ([[QQHelperSetting sharedInstance] isEnableRedPacket]) {
@@ -85,8 +87,21 @@ static QQHelperMenu *instance = nil;
         [subMenu addItem:separatorItem3];
     }
     
+    
     {
-        NSMenuItem *settingWindowItem = [[NSMenuItem alloc] initWithTitle:@"助手设置选项" action:@selector(settingWindowNoUIAction:) keyEquivalent:@"P"];
+        NSMenuItem *autoReplyWindowItem = [[NSMenuItem alloc] initWithTitle:@"自动回复选项" action:@selector(messageAutoReplyWindowNoUIAction:) keyEquivalent:@"K"];
+        [autoReplyWindowItem setTarget:self];
+        [subMenu addItem:autoReplyWindowItem];
+    }
+    
+    {
+        NSMenuItem *separatorItem3 = [NSMenuItem separatorItem];
+        [subMenu addItem:separatorItem3];
+    }
+    
+    
+    {
+        NSMenuItem *settingWindowItem = [[NSMenuItem alloc] initWithTitle:@"红包设置选项" action:@selector(settingWindowNoUIAction:) keyEquivalent:@"P"];
         [settingWindowItem setTarget:self];
         [subMenu addItem:settingWindowItem];
     }
@@ -130,6 +145,17 @@ static QQHelperMenu *instance = nil;
         [menuItem setState:NSControlStateValueOn];
         [[QQHelperSetting sharedInstance] setIsMessageRevoke:YES];
     }
+}
+
+// 消息自动回复
+- (void)messageAutoReplyWindowNoUIAction:(NSMenuItem *)menuItem {
+    NSLog(@"messageAutoReplyWindowNoUIAction");
+    if (!autoReplyWc) {
+        autoReplyWc = [[TKAutoReplyWindowController alloc] init];
+    }
+    [autoReplyWc showWindow:autoReplyWc];
+    [autoReplyWc.window center];
+    [autoReplyWc.window makeKeyWindow];
 }
 
 // 助手设置选项

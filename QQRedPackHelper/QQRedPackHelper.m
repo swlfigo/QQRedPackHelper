@@ -22,6 +22,8 @@
 @class TChatWalletTransferViewController;
 @class RedPackWindowController;
 @class RedPackViewController;
+@class MsgDbService;
+@class BHMsgManager;
 
 //static void (*origin_TChatWalletTransferViewController_updateUI)(TChatWalletTransferViewController *,SEL);
 //static void new_TChatWalletTransferViewController_updateUI(TChatWalletTransferViewController* self,SEL _cmd) {
@@ -110,11 +112,13 @@ static id new_BHMsgListManager_getMessageKey(BHMsgListManager* self,SEL _cmd, id
                     QQHelperSetting *helper = [QQHelperSetting sharedInstance];
                     NSInteger delayInSeconds = [helper getRandomNumber:[helper startTime] to:[helper endTime]];
                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                        [redPackHelper performSelector:@selector(openRedPackWithMsgModel:operation:) withObject:msgKey withObject:@(0)];
-                        if ([msgKey isKindOfClass:NSClassFromString(@"QQRecentMessageModel")]) {
-                            [QQHelperNotification showNotificationWithTitle:@"红包助手提示" content:@"抢到红包😝😝😝"];
-                            NSLog(@"QQRedPackHelper：抢到红包 %@ ---- 详细信息: %@",msgKey,content);
-                        }
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [redPackHelper performSelector:@selector(openRedPackWithMsgModel:operation:) withObject:msgKey withObject:@(0)];
+                            if ([msgKey isKindOfClass:NSClassFromString(@"QQRecentMessageModel")]) {
+                                [QQHelperNotification showNotificationWithTitle:@"红包助手提示" content:@"抢到红包😝😝😝"];
+                                NSLog(@"QQRedPackHelper：抢到红包 %@ ---- 详细信息: %@",msgKey,content);
+                            }
+                        });
                     });
                 }
                 else {
@@ -136,11 +140,13 @@ static id new_BHMsgListManager_getMessageKey(BHMsgListManager* self,SEL _cmd, id
                     QQHelperSetting *helper = [QQHelperSetting sharedInstance];
                     NSInteger delayInSeconds = [helper getRandomNumber:[helper startTime] to:[helper endTime]];
                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                        [redPackHelper performSelector:@selector(openRedPackWithMsgModel:operation:) withObject:msgKey withObject:@(0)];
-                        if ([msgKey isKindOfClass:NSClassFromString(@"QQRecentMessageModel")]) {
-                            [QQHelperNotification showNotificationWithTitle:@"红包助手提示" content:@"抢到红包😝😝😝"];
-                            NSLog(@"QQRedPackHelper：抢到红包 %@ ---- 详细信息: %@",msgKey,content);
-                        }
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [redPackHelper performSelector:@selector(openRedPackWithMsgModel:operation:) withObject:msgKey withObject:@(0)];
+                            if ([msgKey isKindOfClass:NSClassFromString(@"QQRecentMessageModel")]) {
+                                [QQHelperNotification showNotificationWithTitle:@"红包助手提示" content:@"抢到红包😝😝😝"];
+                                NSLog(@"QQRedPackHelper：抢到红包 %@ ---- 详细信息: %@",msgKey,content);
+                            }
+                        });
                     });
                 }
             }
@@ -179,69 +185,130 @@ static void new_RedPackViewController_viewDidLoad(RedPackViewController* self,SE
     }
 }
 
-//NSArray *(*oldNSSearchPathForDirectoriesInDomains)(NSSearchPathDirectory directory, NSSearchPathDomainMask domainMask, BOOL expandTilde);
-//NSArray *newNSSearchPathForDirectoriesInDomains(NSSearchPathDirectory directory,
-//                                             NSSearchPathDomainMask domainMask,
-//                                             BOOL expandTilde) {
-//    NSString *supportDir = [[QQHelperSetting sharedInstance] supportDir];
-//    NSString *documentDir = [[QQHelperSetting sharedInstance] documentDir];
-//    NSString *libraryDir = [[QQHelperSetting sharedInstance] libraryDir];
-//    if (directory == NSApplicationSupportDirectory) {
-//        if (![supportDir containsString:@"Containers"]) {
-//            NSString *temp1 = [[supportDir componentsSeparatedByString:@"/Application"] firstObject];
-//            // /Users/tangxianhai/Library
-//            // /Users/tangxianhai/Library/Containers/com.tencent.qq/Data/Library/Application Support
-//            NSString *bundleId = [[NSBundle mainBundle] bundleIdentifier];
-//            NSString *path = [NSString stringWithFormat:@"%@/Containers/%@/Data/Library/Application Support",temp1,bundleId];
-//            NSLog(@"QQRedPackHelper333 NSApplicationSupportDirectory ：---------------------------------- %@",path);
-//            return @[path];
-//        }
-//    }
-//    if (directory == NSDocumentDirectory) {
-//        NSString *temp1 = [[documentDir componentsSeparatedByString:@"/Documents"] firstObject];
-//        // /Users/tangxianhai/Documents
-//        // /Users/tangxianhai/Library/Containers/com.tencent.qq/Data/Documents
-//        NSString *bundleId = [[NSBundle mainBundle] bundleIdentifier];
-//        NSString *path = [NSString stringWithFormat:@"%@/Library/Containers/%@/Data/Documents",temp1,bundleId];
-//        NSLog(@"QQRedPackHelper333 NSDocumentDirectory ：---------------------------------- %@",path);
-//        return @[path];
-//    }
-////    if (directory == NSLibraryDirectory) {
-////        // /Users/tangxianhai/Library
-////        // /Users/tangxianhai/Library/Containers/com.tangxianhai.com.QQDemo/Data/Library
-////        NSString *bundleId = [[NSBundle mainBundle] bundleIdentifier];
-////        NSString *path = [NSString stringWithFormat:@"%@/Containers/%@/Data/Library",libraryDir,bundleId];
-////        NSLog(@"QQRedPackHelper333 NSLibraryDirectory ：---------------------------------- %@",path);
-////        return @[path];
-////    }
-//
-//    NSArray *array = oldNSSearchPathForDirectoriesInDomains(directory, domainMask, expandTilde);
-//    return array;
-//}
+// https://github.com/AsTryE/QQRedPackHelper/issues/13 历史消息记录不一致问题，感谢 TKkk-iOSer 提供思路
+static NSString *(*origin_NSHomeDirectory)(void);
+NSString *new_NSHomeDirectory(void) {
+    return [NSString stringWithFormat:@"%@/Library/Containers/com.tencent.qq/Data",origin_NSHomeDirectory()];
+}
+
+static NSArray<NSString *> *(*origin_NSSearchPathForDirectoriesInDomains)(NSSearchPathDirectory directory, NSSearchPathDomainMask domainMask, BOOL expandTilde);
+NSArray<NSString *> *new_NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory directory, NSSearchPathDomainMask domainMask, BOOL expandTilde) {
+    NSMutableArray<NSString *> *paths = [origin_NSSearchPathForDirectoriesInDomains(directory, domainMask, expandTilde) mutableCopy];
+    NSString *sandBoxPath = [NSString stringWithFormat:@"%@/Library/Containers/com.tencent.qq/Data",origin_NSHomeDirectory()];
+    [paths enumerateObjectsUsingBlock:^(NSString *filePath, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSRange range = [filePath rangeOfString:origin_NSHomeDirectory()];
+        if (range.length > 0) {
+            NSMutableString *newFilePath = [filePath mutableCopy];
+            [newFilePath replaceCharactersInRange:range withString:sandBoxPath];
+            paths[idx] = newFilePath;
+        }
+    }];
+    return paths;
+}
+
+// 消息撤回拦截
+
+static void (*origin_MsgDbService_updateMessageModel_keyArray)(MsgDbService *,SEL, BHMessageModel * ,id);
+static void new_MsgDbService_updateMessageModel_keyArray(MsgDbService *self,SEL _cmd, BHMessageModel * msgModel ,id keyArrays) {
+    if (msgModel.msgType != 332 || ![[QQHelperSetting sharedInstance] isMessageRevoke]) {
+        origin_MsgDbService_updateMessageModel_keyArray(self,_cmd,msgModel,keyArrays);
+        return;
+    }
+    
+    NSString *revokeUserName;
+    if (IS_VALID_STRING(msgModel.groupCode)) {
+        BHGroupManager *groupManager = [objc_getClass("BHGroupManager") sharedInstance];
+        revokeUserName = [groupManager displayNameForGroupMemberWithGroupCode:msgModel.groupCode memberUin:msgModel.uin];
+    } else if (IS_VALID_STRING(msgModel.discussGroupUin)) {
+        BHGroupManager *groupManager = [objc_getClass("BHGroupManager") sharedInstance];
+        revokeUserName = [groupManager displayNameForGroupMemberWithGroupCode:msgModel.discussGroupUin memberUin:msgModel.uin];
+    } else {
+        BHFriendListManager *friendManager = [objc_getClass("BHFriendListManager") sharedInstance];
+        BHFriendModel *frindModel =  [friendManager getFriendModelByUin:msgModel.uin];
+        if (IS_VALID_STRING(frindModel.remark)) {
+            revokeUserName = frindModel.remark;
+        } else {
+            revokeUserName = frindModel.profileModel.nick;
+        }
+    }
+    
+    NSString *sessionUin = [[QQHelperSetting sharedInstance] getUinByMessageModel:msgModel];
+    MsgDbService *msgService = [objc_getClass("MsgDbService") sharedInstance];
+    BHMessageModel *revokeMsgModel = [[msgService getMessageWithUin:[sessionUin longLongValue]
+                                                           sessType:msgModel.msgSessionType
+                                                             msgIds:@[@(msgModel.msgID)]] firstObject];
+    
+    NSString *revokeMsg = @"[非文本信息]";
+    switch (revokeMsgModel.msgType) {
+        case 1024: {
+            NSArray *msgContent =  [[QQHelperSetting sharedInstance] msgContentsFromMessageModel:revokeMsgModel];
+            if (msgContent.count > 1) {
+                revokeMsg = @"[富文本]";
+            } else if (msgContent.count == 1) {
+                NSDictionary *msgDict = msgContent.firstObject;
+                if ([msgDict[@"msg-type"] integerValue] == 0) {         // 纯文字
+                    revokeMsg = msgDict[@"text"];
+                    if (revokeMsg.length > 35) {
+                        revokeMsg = [[revokeMsg substringToIndex:35] stringByAppendingString:@"…"];
+                    }
+                } else if ([msgDict[@"msg-type"] integerValue] == 1) {  // 纯图片
+                    revokeMsg = @"[图片]";
+                }
+            }
+            break;
+        }
+        case 3:
+            revokeMsg = @"[语音]";
+            break;
+        case 4:
+            revokeMsg = @"[文件(视频)]";
+            break;
+        case 181:
+            revokeMsg = @"[视频]";
+            break;
+        case 140:
+            revokeMsg = @"[分享(位置|联系人|收藏)]";
+            break;
+        default:
+            revokeMsg = @"[非文本消息]";
+            break;
+    }
+    
+    NSString *revokeTipContent = [NSString stringWithFormat:@"QQ助手 拦截到一条撤回消息:\n\t%@：%@", revokeUserName, revokeMsg];
+    if (msgModel.isSelfSend) {
+        revokeTipContent = @"你 撤回了一条消息";
+    }
+    
+    BHTipsMsgOption *tipOpt = [[objc_getClass("BHTipsMsgOption") alloc] init];
+    tipOpt.addToDb = YES;
+    
+    BHMsgManager *msgManager = [objc_getClass("BHMsgManager") sharedInstance];
+    [msgManager addTipsMessage:revokeTipContent sessType:msgModel.msgSessionType uin:sessionUin option:tipOpt];
+}
+
+static void (* origin_BHMsgManager_appendReceiveMessageModel_msgSource)(BHMsgManager *,SEL , NSArray * ,long long);
+static void new_BHMsgManager_appendReceiveMessageModel_msgSource(BHMsgManager *self,SEL _cmd, NSArray * msgModels ,long long arg2) {
+    origin_BHMsgManager_appendReceiveMessageModel_msgSource(self,_cmd,msgModels,arg2);
+    [msgModels enumerateObjectsUsingBlock:^(BHMessageModel *msgModel, NSUInteger idx, BOOL * _Nonnull stop) {
+        [[QQHelperSetting sharedInstance] autoReplyWithMsg:msgModel];
+    }];
+}
+
+static void (* origin_AppController_notifyLoginWithAccount_resultCode_userInfo)(AppController *self, SEL _cmd, id arg1,  long long arg2 ,id arg3);
+static void new_AppController_notifyLoginWithAccount_resultCode_userInfo(AppController *self, SEL _cmd, id arg1,  long long arg2 ,id arg3) {
+    origin_AppController_notifyLoginWithAccount_resultCode_userInfo(self,_cmd,arg1,arg2,arg3);
+    [[TKWebServerManager shareManager] startServer];
+}
+
+static void (* origin_AppController_notifyForceLogoutWithAccount_type_tips)(AppController *self, SEL _cmd, id arg1,  long long arg2 ,id arg3);
+static void new_AppController_notifyForceLogoutWithAccount_type_tips(AppController *self, SEL _cmd, id arg1,  long long arg2 ,id arg3) {
+    origin_AppController_notifyForceLogoutWithAccount_type_tips(self,_cmd,arg1,arg2,arg3);
+    [[TKWebServerManager shareManager] endServer];
+}
 
 static void __attribute__((constructor)) initialize(void) {
     
-    NSLog(@"QQRedPackHelper111：抢红包插件2.0 开启 ----------------------------------");
-    
-//    // 获取原始支持路径
-//    NSArray *path1 = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
-//    [path1 enumerateObjectsUsingBlock:^(id  obj, NSUInteger idx, BOOL * stop) {
-//        [[QQHelperSetting sharedInstance] setSupportDir:obj];
-//        NSLog(@"QQRedPackHelper333 setSupportDir：---------------------------------- %@",obj);
-//    }];
-//
-//    NSArray *path2 = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-//    [path2 enumerateObjectsUsingBlock:^(id  obj, NSUInteger idx, BOOL * stop) {
-//        [[QQHelperSetting sharedInstance] setDocumentDir:obj];
-//        NSLog(@"QQRedPackHelper333 setDocumentDir：---------------------------------- %@",obj);
-//    }];
-//
-//
-//    NSArray *path3 = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
-//    [path3 enumerateObjectsUsingBlock:^(id  obj, NSUInteger idx, BOOL * stop) {
-//        [[QQHelperSetting sharedInstance] setLibraryDir:obj];
-//        NSLog(@"QQRedPackHelper333 NSLibraryDirectory：---------------------------------- %@",obj);
-//    }];
+    NSLog(@"QQRedPackHelper111：抢红包插件3.0 开启 ----------------------------------");
     
     // 初始化红包关键字配置
     if ([[QQHelperSetting sharedInstance] filterKeyword] == nil) {
@@ -252,8 +319,11 @@ static void __attribute__((constructor)) initialize(void) {
     MSHookMessageEx(objc_getClass("MQAIOChatViewController"),  @selector(revokeMessages:), (IMP)&new_MQAIOChatViewController_revokeMessages, (IMP*)&origin_MQAIOChatViewController_revokeMessages);
     
     // 消息防撤回 2
-    MSHookMessageEx(objc_getClass("QQMessageRevokeEngine"),  @selector(handleRecallNotify:isOnline:), (IMP)&new_QQMessageRevokeEngine_handleRecallNotify_isOnline, (IMP*)&origin_QQMessageRevokeEngine_handleRecallNotify_isOnline);
+    MSHookMessageEx(objc_getClass("MsgDbService"),  @selector(updateQQMessageModel:keyArray:), (IMP)&new_MsgDbService_updateMessageModel_keyArray, (IMP*)&origin_MsgDbService_updateMessageModel_keyArray);
     
+    // 发送消息
+    MSHookMessageEx(objc_getClass("BHMsgManager"),  @selector(appendReceiveMessageModel:msgSource:), (IMP)&new_BHMsgManager_appendReceiveMessageModel_msgSource, (IMP*)&origin_BHMsgManager_appendReceiveMessageModel_msgSource);
+
     // 助手设置菜单项
     MSHookMessageEx(objc_getClass("AppController"), @selector(applicationDidFinishLaunching:), (IMP)&new_AppController_applicationDidFinishLaunching, (IMP *)&origin_AppController_applicationDidFinishLaunching);
     
@@ -267,5 +337,10 @@ static void __attribute__((constructor)) initialize(void) {
     MSHookMessageEx(objc_getClass("BHMsgListManager"), @selector(getMessageKey:), (IMP)&new_BHMsgListManager_getMessageKey, (IMP *)&origin_BHMsgListManager_getMessageKey);
     
     // 解决历史记录
-//    MSHookFunction(&NSSearchPathForDirectoriesInDomains, &newNSSearchPathForDirectoriesInDomains, &oldNSSearchPathForDirectoriesInDomains);
+    MSHookFunction(&NSSearchPathForDirectoriesInDomains, &new_NSSearchPathForDirectoriesInDomains, &origin_NSSearchPathForDirectoriesInDomains);
+    MSHookFunction(&NSHomeDirectory, &new_NSHomeDirectory, &origin_NSHomeDirectory);
+    
+    // 开启本地服务器
+    MSHookMessageEx(objc_getClass("AppController"), @selector(notifyLoginWithAccount:resultCode:userInfo:), (IMP)&new_AppController_notifyLoginWithAccount_resultCode_userInfo, (IMP *)&origin_AppController_notifyLoginWithAccount_resultCode_userInfo);
+    MSHookMessageEx(objc_getClass("AppController"), @selector(notifyForceLogoutWithAccount:type:tips:), (IMP)&new_AppController_notifyForceLogoutWithAccount_type_tips, (IMP *)&origin_AppController_notifyForceLogoutWithAccount_type_tips);
 }

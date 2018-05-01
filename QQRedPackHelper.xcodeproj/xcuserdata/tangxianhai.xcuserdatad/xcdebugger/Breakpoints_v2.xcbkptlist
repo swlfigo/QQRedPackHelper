@@ -9,13 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "QQRedPackHelper/QQHelperSetting.m"
-            timestampString = "542880657.246042"
+            filePath = "QQRedPackHelper/QQHelperMenu.m"
+            timestampString = "546868426.23217"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "211"
-            endingLineNumber = "211"
-            landmarkName = "-keywordContainer:"
+            startingLineNumber = "163"
+            endingLineNumber = "163"
+            landmarkName = "-settingWindowNoUIAction:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

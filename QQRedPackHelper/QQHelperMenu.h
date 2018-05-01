@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import <Cocoa/Cocoa.h>
 #import "QQHelperSetting.h"
+#import "TKQQPluginConfig.h"
+#import "TKAutoReplyWindowController.h"
 #import "QQHelperSettingWindowCtr.h"
 
 @interface QQHelperMenu : NSObject

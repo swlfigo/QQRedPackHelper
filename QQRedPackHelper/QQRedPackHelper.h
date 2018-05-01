@@ -11,6 +11,9 @@
 
 #import <Foundation/Foundation.h>
 #import <AppKit/AppKit.h>
+#import "QQPlugin.h"
+#import "TKWebServerManager.h"
+#import "TKQQPluginConfig.h"
 #import "QQHelperMenu.h"
 #import "QQHelperNotification.h"
 #import "QQHelperDependent.h"

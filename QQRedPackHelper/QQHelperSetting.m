@@ -15,6 +15,7 @@
 static NSString *hideRedDetailWindowKey = @"txh_hideRedDetailWindowKey";
 static NSString *redPacketKey = @"txh_redPacketKeyy";
 static NSString *messageRevokeKey = @"txh_messageRevokeKey";
+static NSString *messageReplyKey = @"txh_messageAutoReply";
 
 static NSString *startTimeKey = @"txh_startTimeKey";
 static NSString *endTimeKey = @"txh_endTimeKey";
@@ -119,6 +120,18 @@ static QQHelperSetting *instance = nil;
     }
     return false;
 }
+
+//- (BOOL)isMessageReply {
+//    if ([[NSUserDefaults standardUserDefaults] objectForKey:messageReplyKey] != nil) {
+//        BOOL autoLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:messageReplyKey]boolValue];
+//        return autoLogin;
+//    }
+//    return false;
+//}
+//
+//- (void)setIsMessageReply:(BOOL)isMessageReply {
+//    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:isMessageReply] forKey:messageReplyKey];
+//}
 
 - (void)saveOneRedPacController:(NSViewController *)redPacVc {
     if (self.redPacControllers == nil) {
@@ -266,5 +279,115 @@ static QQHelperSetting *instance = nil;
 //    }
 //    return result;
 //}
+
+/**
+ 获取当前消息的 uin
+ 
+ @param msgModel 消息model
+ @return 消息的 uin
+ */
+- (NSString *)getUinByMessageModel:(BHMessageModel *)msgModel {
+    NSString *currentUin;
+    if (IS_VALID_STRING(msgModel.groupCode)) {
+        currentUin = msgModel.groupCode;
+    } else if (IS_VALID_STRING(msgModel.discussGroupUin)) {
+        currentUin = msgModel.discussGroupUin;
+    } else {
+        currentUin = msgModel.uin;
+    }
+    return currentUin;
+}
+
+/**
+ 获取当前消息的内容数组
+ 
+ @param model 消息model
+ @return 内容数组
+ */
+- (NSArray *)msgContentsFromMessageModel:(BHMessageModel *)model {
+    NSData *jsonData = [model.smallContent dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *error;
+    NSArray *msgContent = [NSJSONSerialization JSONObjectWithData:jsonData
+                                                          options:NSJSONReadingMutableContainers
+                                                            error:&error];
+    
+    return error ? nil : msgContent;
+}
+
+/**
+ 自动回复
+ 
+ @param msgModel 接收的消息
+ */
+- (void)autoReplyWithMsg:(BHMessageModel *)msgModel {
+    if (msgModel.msgType != 1024) return;
+    NSDate *now = [NSDate date];
+    NSTimeInterval nowTime = [now timeIntervalSince1970];
+    NSTimeInterval receiveTime = [msgModel time];
+    NSTimeInterval value = nowTime - receiveTime;
+    if (value > 180) { //   3 分钟前的不回复
+        return;
+    }
+    
+    NSArray *msgContentArray = [self msgContentsFromMessageModel:msgModel];
+    NSMutableString *msgContent = [NSMutableString stringWithFormat:@""];
+    if (msgContentArray.count > 0) {
+        [msgContentArray enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if (IS_VALID_STRING(obj[@"text"]) && [obj[@"msg-type"] integerValue] == 0) {
+                [msgContent appendString:obj[@"text"]];
+            }
+        }];
+    }
+    
+    NSArray *autoReplyModels = [[TKQQPluginConfig sharedConfig] autoReplyModels];
+    [autoReplyModels enumerateObjectsUsingBlock:^(TKAutoReplyModel *model, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (!model.enable) return;
+        if (!model.replyContent || model.replyContent.length == 0) return;
+        if ((IS_VALID_STRING(msgModel.groupCode) || IS_VALID_STRING(msgModel.discussGroupUin)) && !model.enableGroupReply) return;
+        if (!(IS_VALID_STRING(msgModel.groupCode) || IS_VALID_STRING(msgModel.discussGroupUin)) && !model.enableSingleReply) return;
+        
+        NSArray *replyArray = [model.replyContent componentsSeparatedByString:@"|"];
+        int index = arc4random() % replyArray.count;
+        NSString *randomReplyContent = replyArray[index];
+        
+        if (model.enableRegex) {
+            NSString *regex = model.keyword;
+            NSError *error;
+            NSRegularExpression *regular = [NSRegularExpression regularExpressionWithPattern:regex options:NSRegularExpressionCaseInsensitive error:&error];
+            if (error) return;
+            NSInteger count = [regular numberOfMatchesInString:msgContent options:NSMatchingReportCompletion range:NSMakeRange(0, msgContent.length)];
+            if (count > 0) {
+                long long uin = [[self getUinByMessageModel:msgModel] longLongValue];
+                NSInteger delayTime = model.enableDelay ? model.delayTime : 0;
+                [self sendTextMessage:randomReplyContent uin:uin sessionType:msgModel.msgSessionType delay:delayTime];
+            }
+        } else {
+            NSArray * keyWordArray = [model.keyword componentsSeparatedByString:@"|"];
+            [keyWordArray enumerateObjectsUsingBlock:^(NSString *keyword, NSUInteger idx, BOOL * _Nonnull stop) {
+                if ([keyword isEqualToString:@"*"] || [msgContent isEqualToString:keyword]) {
+                    long long uin = [[self getUinByMessageModel:msgModel] longLongValue];
+                    NSInteger delayTime = model.enableDelay ? model.delayTime : 0;
+                    [self sendTextMessage:randomReplyContent uin:uin sessionType:msgModel.msgSessionType delay:delayTime];
+                }
+            }];
+        }
+    }];
+}
+
+- (void)sendTextMessage:(NSString *)msg uin:(long long)uin sessionType:(int)type delay:(NSInteger)delayTime {
+    if (delayTime == 0) {
+        [TKMsgManager sendTextMessage:msg
+                                  uin:uin
+                          sessionType:type];
+        return;
+    }
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayTime * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [TKMsgManager sendTextMessage:msg
+                                      uin:uin
+                              sessionType:type];
+        });
+    });
+}
 
 @end
