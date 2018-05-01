@@ -5,6 +5,18 @@
 
 Mac系统下的QQ抢红包神器，支持群和个人红包，包括文字口令红包。
 
+## V3.0
+
+修复bug:
+> 根据`TKkk-iOSer`在问题[issues13](https://github.com/AsTryE/QQRedPackHelper/issues/13)中的提示，修复了消息历史记录不一致问题，就可以不采用第二种安装方式了。
+
+功能：
+> 1. 新增消息自动回复。
+> 2. 优化消息防撤回提示。
+
+### Ps: 
+特别感谢 `TKkk-iOSer` 的 [QQPlugin-macOS](https://github.com/TKkk-iOSer/QQPlugin-macOS) 助手提供以上两个功能核心代码支持，集成过来只是为了方便大家，只安装一个插件就可以玩耍了。
+
 ## V2.3
 
 修复bug:
@@ -50,9 +62,13 @@ alias QQ='sh /Applications/QQ.app/Contents/MacOS/injectionQQ.sh'
 
 图 1-1
 
-![](https://ws3.sinaimg.cn/large/006tKfTcgy1fpem7ygxofj30hd0nin0d.jpg)
+![](![](https://ws3.sinaimg.cn/large/006tKfTcgy1fqw40kk8bxj30nc0htwhp.jpg))
 
 图 1-2
+
+![](https://ws1.sinaimg.cn/large/006tKfTcgy1fqw41s8pgaj30mn0i7n08.jpg)
+
+图 1-3
 
 ![](https://ws1.sinaimg.cn/large/006tKfTcgy1fperjoscjvj30f50kjabg.jpg)
  
