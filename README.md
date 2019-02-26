@@ -5,6 +5,10 @@
 
 Mac系统下的QQ抢红包神器，支持群和个人红包，包括文字口令红包。
 
+## V3.2
+> 1. 修复内存占用过高问题。
+> 2. 抢口令红包，模拟发送口令消息到群，不易被发现使用了插件。
+
 ## V3.0
 
 修复bug:
@@ -82,4 +86,4 @@ alias QQ='sh /Applications/QQ.app/Contents/MacOS/injectionQQ.sh'
 2. 想要自己编译项目，需要安装 [MonkeyDev](https://github.com/AloneMonkey/MonkeyDev)
 3. 测试QQ版本截图：
 
-![](https://ws1.sinaimg.cn/large/006tNc79gy1fozoyuhihej30dw09bgly.jpg)  
+![](https://ws4.sinaimg.cn/large/006tKfTcgy1g0jo85oejfj30rs0im49l.jpg)
