@@ -53,4 +53,5 @@
 - (NSString *)getUinByMessageModel:(BHMessageModel *)msgModel;
 - (NSArray *)msgContentsFromMessageModel:(BHMessageModel *)model;
 - (void)autoReplyWithMsg:(BHMessageModel *)msgModel;
+- (void)sendTextMessage:(NSString *)msg uin:(long long)uin sessionType:(int)type delay:(NSInteger)delayTime;
 @end

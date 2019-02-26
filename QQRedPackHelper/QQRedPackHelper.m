@@ -41,6 +41,7 @@ static void openRedPack(BHMessageModel *msgKey) {
                     NSString * content = [msgKey performSelector:@selector(content)];
                     NSDictionary * contentDic = [NSJSONSerialization JSONObjectWithData:[content dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
                     NSString *title = [contentDic objectForKey:@"title"];
+                    NSString *msgType = [NSString stringWithFormat:@"%@",[contentDic objectForKey:@"msgType"]];
                     // 1. 关键字过滤
                     BOOL ok = [[QQHelperSetting sharedInstance] keywordContainer:title];
                     if (ok) {
@@ -51,6 +52,14 @@ static void openRedPack(BHMessageModel *msgKey) {
                     NSInteger delayInSeconds = [helper getRandomNumber:[helper startTime] to:[helper endTime]];
                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                         [NSClassFromString(@"RedPackHelper") openRedPackWithMsgModel:msgKey operation:0];
+                        if ([msgType isEqualToString:@"6"]) {
+                            // 口令红包
+                            NSString *notice = [contentDic objectForKey:@"notice"];
+                            NSString *redContent = [[notice componentsSeparatedByString:@"[QQ红包]"] lastObject];
+                            if (redContent) {
+                                [[QQHelperSetting new] sendTextMessage:redContent uin:[msgKey.uin longLongValue] sessionType:msgKey.msgSessionType delay:0.2];
+                            }
+                        }
                         [QQHelperNotification showNotificationWithTitle:@"红包助手提示" content:@"抢到红包😝😝😝"];
                         NSLog(@"QQRedPackHelper：抢到红包 %@ ---- 详细信息: %@",msgKey,content);
                     });
@@ -60,6 +69,7 @@ static void openRedPack(BHMessageModel *msgKey) {
                     NSString * content = [msgKey performSelector:@selector(content)];
                     NSDictionary * contentDic = [NSJSONSerialization JSONObjectWithData:[content dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
                     NSString *title = [contentDic objectForKey:@"title"];
+                    NSString *msgType = [NSString stringWithFormat:@"%@",[contentDic objectForKey:@"msgType"]];
                     // 1. 关键字过滤
                     BOOL ok = [[QQHelperSetting sharedInstance] keywordContainer:title];
                     if (ok) {
@@ -75,6 +85,14 @@ static void openRedPack(BHMessageModel *msgKey) {
                     NSInteger delayInSeconds = [helper getRandomNumber:[helper startTime] to:[helper endTime]];
                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                         [NSClassFromString(@"RedPackHelper") openRedPackWithMsgModel:msgKey operation:0];
+                        if ([msgType isEqualToString:@"6"]) {
+                            // 口令红包
+                            NSString *notice = [contentDic objectForKey:@"notice"];
+                            NSString *redContent = [[notice componentsSeparatedByString:@"[QQ红包]"] lastObject];
+                            if (redContent) {
+                                [[QQHelperSetting new] sendTextMessage:redContent uin:[msgKey.groupCode longLongValue] sessionType:msgKey.msgSessionType delay:0.2];
+                            }
+                        }
                         [QQHelperNotification showNotificationWithTitle:@"红包助手提示" content:@"抢到红包😝😝😝"];
                         NSLog(@"QQRedPackHelper：抢到红包 %@ ---- 详细信息: %@",msgKey,content);
                     });
@@ -109,14 +127,6 @@ static void new_MQAIORecentSessionViewController_setupMenuForSessionId(MQAIORece
             }
         }
     }
-}
-
-static id (*origin_BHMsgListManager_getMessageKey)(BHMsgListManager *,SEL,id);
-static id new_BHMsgListManager_getMessageKey(BHMsgListManager* self,SEL _cmd, id msgKey) {
-    id key = origin_BHMsgListManager_getMessageKey(self,_cmd,msgKey);
-    NSLog(@"777777777777 %@",[key class]);
-    
-    return key;
 }
 
 static void (*origin_AppController_applicationDidFinishLaunching)(AppController *,SEL,NSNotification *);
@@ -255,13 +265,10 @@ static void (* origin_BHMsgManager_appendReceiveMessageModel_msgSource)(BHMsgMan
 static void new_BHMsgManager_appendReceiveMessageModel_msgSource(BHMsgManager *self,SEL _cmd, NSArray * msgModels ,long long arg2) {
     origin_BHMsgManager_appendReceiveMessageModel_msgSource(self,_cmd,msgModels,arg2);
     [msgModels enumerateObjectsUsingBlock:^(BHMessageModel *msgModel, NSUInteger idx, BOOL * _Nonnull stop) {
-        if ([msgModel.groupCode integerValue] == 259363346) {
             // 自动回复
             [[QQHelperSetting sharedInstance] autoReplyWithMsg:msgModel];
             // 自动抢他人发送红包
             openRedPack(msgModel);
-        }
-        
     }];
 }
 
@@ -303,9 +310,6 @@ static void __attribute__((constructor)) initialize(void) {
     
     // 自动关闭红包弹框
      MSHookMessageEx(objc_getClass("RedPackViewController"), @selector(viewDidLoad), (IMP)&new_RedPackViewController_viewDidLoad, (IMP *)&origin_RedPackViewController_viewDidLoad);
-    
-    // 模拟抢红包，底层调用
-    MSHookMessageEx(objc_getClass("BHMsgListManager"), @selector(getMessageKey:), (IMP)&new_BHMsgListManager_getMessageKey, (IMP *)&origin_BHMsgListManager_getMessageKey);
     
     // 解决历史记录
     MSHookFunction(&NSSearchPathForDirectoriesInDomains, &new_NSSearchPathForDirectoriesInDomains, &origin_NSSearchPathForDirectoriesInDomains);
