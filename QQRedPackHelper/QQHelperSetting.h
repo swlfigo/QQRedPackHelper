@@ -25,8 +25,8 @@
 //@property (nonatomic, assign) BOOL isMessageReply;
 @property (nonatomic, assign) BOOL isPersonRedPackage;
 
-@property (nonatomic, assign) NSInteger startTime;
-@property (nonatomic, assign) NSInteger endTime;
+@property (nonatomic, assign) int startTime;
+@property (nonatomic, assign) int endTime;
 
 @property (nonatomic, strong) NSNumber * msgRandom;
 

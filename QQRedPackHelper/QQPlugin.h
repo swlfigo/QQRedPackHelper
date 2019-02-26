@@ -176,3 +176,13 @@ struct _BHMessageSession {
 - (void)addText:(id)arg1;
 - (id)initWithMessageType:(int)arg1;
 @end
+
+@interface QQGroupMsgChannel : NSObject
+
+@end
+
+@interface RedPackHelper : NSObject
+
++ (void)openRedPackWithMsgModel:(BHMessageModel *)arg1 operation:(int)arg2;
+
+@end

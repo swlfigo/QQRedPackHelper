@@ -25,37 +25,64 @@
 @class MsgDbService;
 @class BHMsgManager;
 
-//static void (*origin_TChatWalletTransferViewController_updateUI)(TChatWalletTransferViewController *,SEL);
-//static void new_TChatWalletTransferViewController_updateUI(TChatWalletTransferViewController* self,SEL _cmd) {
-//    origin_TChatWalletTransferViewController_updateUI(self,_cmd);
-//
-//    if ([[QQHelperSetting sharedInstance] isEnableRedPacket]) {
-//        id chatWalletVc = self;
-//        id chatWalletTransferViewModel = [chatWalletVc valueForKey:@"_viewModel"];
-//        if (chatWalletTransferViewModel) {
-//            id helperRedPackViewMode = [chatWalletTransferViewModel valueForKey:@"_redPackViewModel"];
-//            // 判读显示的单条消息是否红包
-//            if (helperRedPackViewMode) {
-//                NSDictionary *helperRedPackDic = [helperRedPackViewMode valueForKey:@"_redPackDic"];
-//                id chatWalletContentView = [chatWalletVc valueForKey:@"_walletContentView"];
-//                if (chatWalletContentView) {
-//                    // 判断红包本机是否抢过
-//                    id helperRedPackOpenStateText = [chatWalletVc valueForKey:@"_redPackOpenStateLabel"];
-//                    if (helperRedPackOpenStateText) {
-//                        NSString *redPackOpenState = [helperRedPackOpenStateText performSelector:@selector(stringValue)];
-//                        if (![redPackOpenState isEqualToString:@"已拆开"]) {
-//                            NSLog(@"QQRedPackHelper：抢到红包 - 红包信息: %@",helperRedPackDic);
-//                            [chatWalletContentView performSelector:@selector(performClick)];
-//                            [QQHelperNotification showNotificationWithTitle:@"红包助手提示" content:@"抢到红包😝😝😝"];
-//                        } else {
-//                            NSLog(@"QQRedPackHelper：检测到历史红包 - 红包信息: %@",helperRedPackDic);
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
-//}
+static void openRedPack(BHMessageModel *msgKey) {
+    if ([[QQHelperSetting sharedInstance] isEnableRedPacket]) {
+        if ([msgKey isKindOfClass:NSClassFromString(@"BHMessageModel")]) {
+            int mType = [[msgKey valueForKey:@"_msgType"] intValue];
+            int read = [[msgKey valueForKey:@"_read"] intValue];
+            NSInteger groupCode = [[msgKey valueForKey:@"_groupCode"] integerValue];
+            if (mType == 311 && read == 0) {
+                if (groupCode == 0) {
+                    // 个人红包处理逻辑
+                    BOOL personOk = [[QQHelperSetting sharedInstance] isPersonRedPackage];
+                    if (!personOk) {
+                        return;
+                    }
+                    NSString * content = [msgKey performSelector:@selector(content)];
+                    NSDictionary * contentDic = [NSJSONSerialization JSONObjectWithData:[content dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
+                    NSString *title = [contentDic objectForKey:@"title"];
+                    // 1. 关键字过滤
+                    BOOL ok = [[QQHelperSetting sharedInstance] keywordContainer:title];
+                    if (ok) {
+                        return;
+                    }
+                    // 2. 红包延迟
+                    QQHelperSetting *helper = [QQHelperSetting sharedInstance];
+                    NSInteger delayInSeconds = [helper getRandomNumber:[helper startTime] to:[helper endTime]];
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                        [NSClassFromString(@"RedPackHelper") openRedPackWithMsgModel:msgKey operation:0];
+                        [QQHelperNotification showNotificationWithTitle:@"红包助手提示" content:@"抢到红包😝😝😝"];
+                        NSLog(@"QQRedPackHelper：抢到红包 %@ ---- 详细信息: %@",msgKey,content);
+                    });
+                }
+                else {
+                    // 群红包处理逻辑
+                    NSString * content = [msgKey performSelector:@selector(content)];
+                    NSDictionary * contentDic = [NSJSONSerialization JSONObjectWithData:[content dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
+                    NSString *title = [contentDic objectForKey:@"title"];
+                    // 1. 关键字过滤
+                    BOOL ok = [[QQHelperSetting sharedInstance] keywordContainer:title];
+                    if (ok) {
+                        return;
+                    }
+                    // 2. 指定群过滤
+                    BOOL groupOk = [[QQHelperSetting sharedInstance] groupSessionIdContainer:groupCode];
+                    if (groupOk) {
+                        return;
+                    }
+                    // 3. 红包延迟
+                    QQHelperSetting *helper = [QQHelperSetting sharedInstance];
+                    NSInteger delayInSeconds = [helper getRandomNumber:[helper startTime] to:[helper endTime]];
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                        [NSClassFromString(@"RedPackHelper") openRedPackWithMsgModel:msgKey operation:0];
+                        [QQHelperNotification showNotificationWithTitle:@"红包助手提示" content:@"抢到红包😝😝😝"];
+                        NSLog(@"QQRedPackHelper：抢到红包 %@ ---- 详细信息: %@",msgKey,content);
+                    });
+                }
+            }
+        }
+    }
+}
 
 static void (*origin_MQAIORecentSessionViewController_setupMenuForSessionId)(MQAIORecentSessionViewController *,SEL,id,id);
 static void new_MQAIORecentSessionViewController_setupMenuForSessionId(MQAIORecentSessionViewController* self,SEL _cmd,id a3,id a4) {
@@ -87,71 +114,8 @@ static void new_MQAIORecentSessionViewController_setupMenuForSessionId(MQAIORece
 static id (*origin_BHMsgListManager_getMessageKey)(BHMsgListManager *,SEL,id);
 static id new_BHMsgListManager_getMessageKey(BHMsgListManager* self,SEL _cmd, id msgKey) {
     id key = origin_BHMsgListManager_getMessageKey(self,_cmd,msgKey);
-    if ([[QQHelperSetting sharedInstance] isEnableRedPacket]) {
-        id redPackHelper = NSClassFromString(@"RedPackHelper");
-        if ([msgKey isKindOfClass:NSClassFromString(@"BHMessageModel")]) {
-            int mType = [[msgKey valueForKey:@"_msgType"] intValue];
-            int read = [[msgKey valueForKey:@"_read"] intValue];
-            NSInteger groupCode = [[msgKey valueForKey:@"_groupCode"] integerValue];
-            if (mType == 311 && read == 0) {
-                if (groupCode == 0) {
-                    // 个人红包处理逻辑
-                    BOOL personOk = [[QQHelperSetting sharedInstance] isPersonRedPackage];
-                    if (!personOk) {
-                        return key;
-                    }
-                    NSString * content = [msgKey performSelector:@selector(content)];
-                    NSDictionary * contentDic = [NSJSONSerialization JSONObjectWithData:[content dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
-                    NSString *title = [contentDic objectForKey:@"title"];
-                    // 1. 关键字过滤
-                    BOOL ok = [[QQHelperSetting sharedInstance] keywordContainer:title];
-                    if (ok) {
-                        return key;
-                    }
-                    // 2. 红包延迟
-                    QQHelperSetting *helper = [QQHelperSetting sharedInstance];
-                    NSInteger delayInSeconds = [helper getRandomNumber:[helper startTime] to:[helper endTime]];
-                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            [redPackHelper performSelector:@selector(openRedPackWithMsgModel:operation:) withObject:msgKey withObject:@(0)];
-                            if ([msgKey isKindOfClass:NSClassFromString(@"QQRecentMessageModel")]) {
-                                [QQHelperNotification showNotificationWithTitle:@"红包助手提示" content:@"抢到红包😝😝😝"];
-                                NSLog(@"QQRedPackHelper：抢到红包 %@ ---- 详细信息: %@",msgKey,content);
-                            }
-                        });
-                    });
-                }
-                else {
-                    // 群红包处理逻辑
-                    NSString * content = [msgKey performSelector:@selector(content)];
-                    NSDictionary * contentDic = [NSJSONSerialization JSONObjectWithData:[content dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
-                    NSString *title = [contentDic objectForKey:@"title"];
-                    // 1. 关键字过滤
-                    BOOL ok = [[QQHelperSetting sharedInstance] keywordContainer:title];
-                    if (ok) {
-                        return key;
-                    }
-                    // 2. 指定群过滤
-                    BOOL groupOk = [[QQHelperSetting sharedInstance] groupSessionIdContainer:groupCode];
-                    if (groupOk) {
-                        return key;
-                    }
-                    // 3. 红包延迟
-                    QQHelperSetting *helper = [QQHelperSetting sharedInstance];
-                    NSInteger delayInSeconds = [helper getRandomNumber:[helper startTime] to:[helper endTime]];
-                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            [redPackHelper performSelector:@selector(openRedPackWithMsgModel:operation:) withObject:msgKey withObject:@(0)];
-                            if ([msgKey isKindOfClass:NSClassFromString(@"QQRecentMessageModel")]) {
-                                [QQHelperNotification showNotificationWithTitle:@"红包助手提示" content:@"抢到红包😝😝😝"];
-                                NSLog(@"QQRedPackHelper：抢到红包 %@ ---- 详细信息: %@",msgKey,content);
-                            }
-                        });
-                    });
-                }
-            }
-        }
-    }
+    NSLog(@"777777777777 %@",[key class]);
+    
     return key;
 }
 
@@ -286,11 +250,18 @@ static void new_MsgDbService_updateMessageModel_keyArray(MsgDbService *self,SEL 
     [msgManager addTipsMessage:revokeTipContent sessType:msgModel.msgSessionType uin:sessionUin option:tipOpt];
 }
 
+// 接受消息响应函数
 static void (* origin_BHMsgManager_appendReceiveMessageModel_msgSource)(BHMsgManager *,SEL , NSArray * ,long long);
 static void new_BHMsgManager_appendReceiveMessageModel_msgSource(BHMsgManager *self,SEL _cmd, NSArray * msgModels ,long long arg2) {
     origin_BHMsgManager_appendReceiveMessageModel_msgSource(self,_cmd,msgModels,arg2);
     [msgModels enumerateObjectsUsingBlock:^(BHMessageModel *msgModel, NSUInteger idx, BOOL * _Nonnull stop) {
-        [[QQHelperSetting sharedInstance] autoReplyWithMsg:msgModel];
+        if ([msgModel.groupCode integerValue] == 259363346) {
+            // 自动回复
+            [[QQHelperSetting sharedInstance] autoReplyWithMsg:msgModel];
+            // 自动抢他人发送红包
+            openRedPack(msgModel);
+        }
+        
     }];
 }
 
@@ -308,7 +279,7 @@ static void new_AppController_notifyForceLogoutWithAccount_type_tips(AppControll
 
 static void __attribute__((constructor)) initialize(void) {
     
-    NSLog(@"QQRedPackHelper111：抢红包插件3.0 开启 ----------------------------------");
+    NSLog(@"QQRedPackHelper：抢红包插件4.0 开启 ----------------------------------");
     
     // 初始化红包关键字配置
     if ([[QQHelperSetting sharedInstance] filterKeyword] == nil) {
@@ -321,7 +292,7 @@ static void __attribute__((constructor)) initialize(void) {
     // 消息防撤回 2
     MSHookMessageEx(objc_getClass("MsgDbService"),  @selector(updateQQMessageModel:keyArray:), (IMP)&new_MsgDbService_updateMessageModel_keyArray, (IMP*)&origin_MsgDbService_updateMessageModel_keyArray);
     
-    // 发送消息
+    // 接受消息响应
     MSHookMessageEx(objc_getClass("BHMsgManager"),  @selector(appendReceiveMessageModel:msgSource:), (IMP)&new_BHMsgManager_appendReceiveMessageModel_msgSource, (IMP*)&origin_BHMsgManager_appendReceiveMessageModel_msgSource);
 
     // 助手设置菜单项

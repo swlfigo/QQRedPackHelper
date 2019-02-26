@@ -61,27 +61,27 @@ static QQHelperSetting *instance = nil;
     [[NSUserDefaults standardUserDefaults] setObject:msgRandom forKey:msgRandomKey];
 }
 
-- (NSInteger)startTime {
+- (int)startTime {
     if ([[NSUserDefaults standardUserDefaults] objectForKey:startTimeKey] != nil) {
-        NSInteger time = [[[NSUserDefaults standardUserDefaults] objectForKey:startTimeKey]integerValue];
+        int time = [[[NSUserDefaults standardUserDefaults] objectForKey:startTimeKey]intValue];
         return time;
     }
     return 0;
 }
 
-- (void)setStartTime:(NSInteger)startTime {
-    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:startTime] forKey:startTimeKey];
+- (void)setStartTime:(int)startTime {
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInt:startTime] forKey:startTimeKey];
 }
 
-- (NSInteger)endTime {
+- (int)endTime {
     if ([[NSUserDefaults standardUserDefaults] objectForKey:endTimeKey] != nil) {
-        NSInteger time = [[[NSUserDefaults standardUserDefaults] objectForKey:endTimeKey]integerValue];
+        int time = [[[NSUserDefaults standardUserDefaults] objectForKey:endTimeKey]intValue];
         return time;
     }
     return 0;
 }
 
-- (void)setEndTime:(NSInteger)endTime {
+- (void)setEndTime:(int)endTime {
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:endTime] forKey:endTimeKey];
 }
 
