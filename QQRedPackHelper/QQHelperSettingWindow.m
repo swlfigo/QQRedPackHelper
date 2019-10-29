@@ -8,63 +8,64 @@
 
 #import "QQHelperSettingWindow.h"
 
-@implementation QQHelperSettingWindow {
-    QQHelperSegmentedControl *segmentedCr;
-    RedPackView *redPackSettingView;
-    OtherView *otherSettingView;
-}
+@interface  QQHelperSettingWindow()
+@property (strong, nonatomic) QQHelperSegmentedControl *segmentedCr;
+@property (strong, nonatomic) RedPackView *redPackSettingView;
+@property (strong, nonatomic) OtherView *otherSettingView;
+@end
+
+@implementation QQHelperSettingWindow
 
 - (instancetype)initWithContentRect:(NSRect)contentRect styleMask:(NSWindowStyleMask)style backing:(NSBackingStoreType)backingStoreType defer:(BOOL)flag {
     self = [super initWithContentRect:contentRect styleMask:style backing:backingStoreType defer:flag];
     if (self != nil) {
         [self subviewsInit];
+        [self addConstraints];
     }
     return self;
 }
 
 - (void)subviewsInit {
-    segmentedCr = [QQHelperSegmentedControl segmentedControlWithLabels:@[@"红包设置",@"其他设置"] trackingMode:NSSegmentSwitchTrackingSelectOne target:self action:NSSelectorFromString(@"selectSegmentCr:")];
-    [segmentedCr workInit];
-    [self.contentView addSubview:segmentedCr];
+    self.segmentedCr = [QQHelperSegmentedControl segmentedControlWithLabels:@[@"红包设置",@"其他设置"] trackingMode:NSSegmentSwitchTrackingSelectOne target:self action:NSSelectorFromString(@"selectSegmentCr:")];
+    [self.segmentedCr workInit];
+    [self.contentView addSubview:self.segmentedCr];
 
-    redPackSettingView = [[RedPackView alloc] initWithFrame:NSZeroRect];
-    redPackSettingView.hidden = NO;
+    self.redPackSettingView = [[RedPackView alloc] initWithFrame:NSZeroRect];
+    self.redPackSettingView.hidden = NO;
 
-    otherSettingView = [[OtherView alloc] initWithFrame:NSZeroRect];
-    otherSettingView.hidden = YES;
+    self.otherSettingView = [[OtherView alloc] initWithFrame:NSZeroRect];
+    self.otherSettingView.hidden = YES;
 
-    [self.contentView addSubview:redPackSettingView];
-    [self.contentView addSubview:otherSettingView];
+    [self.contentView addSubview:self.redPackSettingView];
+    [self.contentView addSubview:self.otherSettingView];
 
 }
 
-- (void)layoutIfNeeded {
-    [segmentedCr mas_makeConstraints:^(MASConstraintMaker *make) {
+- (void)addConstraints {
+    [self.segmentedCr mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.contentView.mas_top).with.offset(10);
         make.centerX.mas_equalTo(self.contentView);
     }];
-
-    [redPackSettingView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(segmentedCr.mas_bottom).with.offset(10);
+    __weak typeof(self) weakSelf = self;
+    [self.redPackSettingView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(weakSelf.segmentedCr.mas_bottom).with.offset(10);
         make.left.mas_equalTo(self.contentView.mas_left).with.offset(10);
         make.right.mas_equalTo(self.contentView.mas_right).with.offset(-10);
         make.bottom.mas_equalTo(self.contentView.mas_bottom).with.offset(-10);
     }];
-
-    [otherSettingView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.mas_equalTo(redPackSettingView).with.insets(NSEdgeInsetsMake(0, 0, 0, 0));
-    }];
     
-    [super layoutIfNeeded];
+    [self.otherSettingView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.mas_equalTo(weakSelf.redPackSettingView).with.insets(NSEdgeInsetsMake(0, 0, 0, 0));
+    }];
 }
 
 - (void)selectSegmentCr:(QQHelperSegmentedControl *)Cr {
     if (Cr.selectedSegment == 0) {
-        redPackSettingView.hidden = NO;
-        otherSettingView.hidden = YES;
+        self.redPackSettingView.hidden = NO;
+        self.otherSettingView.hidden = YES;
     } else {
-        redPackSettingView.hidden = YES;
-        otherSettingView.hidden = NO;
+        self.redPackSettingView.hidden = YES;
+        self.otherSettingView.hidden = NO;
     }
 }
 
