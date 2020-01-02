@@ -7,7 +7,7 @@
 //
 
 #import "QQHelperSetting.h"
-
+#import "MessageHandlerManager.h"
 @implementation QQHelperSetting {
     
 }
@@ -318,9 +318,45 @@ static QQHelperSetting *instance = nil;
  自动回复
  
  @param msgModel 接收的消息
+ 1024为普通消息
+ 消息内容在 smallcontent json存在
+ msgModel.identityUin 只自己ID
+ msgModel.groupCode 群ID
+ msgModel.uin 是发消息人ID
  */
 - (void)autoReplyWithMsg:(BHMessageModel *)msgModel {
     if (msgModel.msgType != 1024) return;
+    
+    
+    NSMutableDictionary *infoDic = [[NSMutableDictionary alloc]init];
+    infoDic[@"fromUserID"] = msgModel.uin?:@"";
+    infoDic[@"toUserID"] = @(msgModel.identityUin);
+    infoDic[@"time"] = @(msgModel.time);
+    infoDic[@"groupCode"] = msgModel.groupCode?:@"";
+    infoDic[@"nickName"] = msgModel.nickname?:@"";
+    NSArray *msgContents = [self msgContentsFromMessageModel:msgModel];
+    __block NSMutableString *msg = [NSMutableString stringWithFormat:@""];
+    if (msgContents.count > 0) {
+        [msgContents enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if (IS_VALID_STRING(obj[@"text"]) && [obj[@"msg-type"] integerValue] == 0) {
+                //文字内容
+                [msg appendString:obj[@"text"]];
+            }else if([obj[@"msg-type"] integerValue] == 1){
+                //图片内容
+                infoDic[@"imgInfo"] = obj;
+            }else{
+                
+            }
+        }];
+    }
+    infoDic[@"message"] = msg?:@"";
+    [[MessageHandlerManager sharedInstance]postMessageToServer:infoDic];
+    
+    
+    
+    return;
+    //下面代码为原来库代码，不需要
+    
     NSDate *now = [NSDate date];
     NSTimeInterval nowTime = [now timeIntervalSince1970];
     NSTimeInterval receiveTime = [msgModel time];

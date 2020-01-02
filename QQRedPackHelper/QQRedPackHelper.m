@@ -268,7 +268,7 @@ static void new_BHMsgManager_appendReceiveMessageModel_msgSource(BHMsgManager *s
             // 自动回复
             [[QQHelperSetting sharedInstance] autoReplyWithMsg:msgModel];
             // 自动抢他人发送红包
-            openRedPack(msgModel);
+//            openRedPack(msgModel);
     }];
 }
 
@@ -284,6 +284,98 @@ static void new_AppController_notifyForceLogoutWithAccount_type_tips(AppControll
     [[TKWebServerManager shareManager] endServer];
 }
 
+//发送消息
+/*
+ BHCompoundMessagePacket 中含有一个array数组,数组中包含字典信息
+ 如果是纯图片格式包含一个数组如下:
+ //burn是阅后即焚？？
+ {
+     burn = 0;
+     "file-path" = ".~/Library/Caches/Images/64E4DCE37B039D5FB822775A333D27C4.gif";
+     "msg-type" = 1;
+ }
+ 
+ //如果是数字+文字
+ array 里面2个数组
+ [
+ {
+     burn = 0;
+     "file-path" = ".~/Library/Caches/Images/64E4DCE37B039D5FB822775A333D27C4.gif";
+     "msg-type" = 1;
+ },
+ {
+     "msg-type" = 0;
+     text = 1231231;
+ }
+ //如果纯文字类型,array1个数组
+ {
+     "msg-type" = 0;
+     text = "1\\";
+ }
+ 
+ ]
+ 
+ 
+ */
+static void (* origin_BHMsgManager_sendMessagePacket_target_completion_ProgressBlock)(BHMsgManager *self,SEL _cmd , id arg1 , struct _BHMessageSession arg2,id arg3, id arg4);
+static void new_BHMsgManager_sendMessagePacket_target_completion_ProgressBlock(BHMsgManager *self,SEL _cmd, BHCompoundMessagePacket *packet ,struct _BHMessageSession arg2 , id completeBlock , id progressBlock) {
+    
+    NSLog(@"sendNewMessage"); origin_BHMsgManager_sendMessagePacket_target_completion_ProgressBlock(self,_cmd,packet,arg2,completeBlock,progressBlock);
+}
+
+//图片
+static void (* origin_BHCompoundMessagePacket_addImageAtPath_burnAfterSending)(BHCompoundMessagePacket *self,SEL _cmd , id arg1 , BOOL arg2);
+static void ( new_BHCompoundMessagePacket_addImageAtPath_burnAfterSending)(BHCompoundMessagePacket *self,SEL _cmd , id arg1 , BOOL arg2){
+    NSLog(@"addImage");
+    origin_BHCompoundMessagePacket_addImageAtPath_burnAfterSending(self,_cmd,arg1,arg2);
+}
+
+//下载图片
+static void (* origin_BHMsgManager_downloadImageByMsg_content_completion_ProgressBlock)(BHMsgManager *self,SEL _cmd , id arg1 , id arg2, id arg3 , id arg4);
+static void ( new_BHMsgManager_downloadImageByMsg_content_completion_ProgressBlock)(BHMsgManager *self,SEL _cmd , id msg , id content , id complete , id arg4){
+    NSLog(@"downloadImage");
+
+    origin_BHMsgManager_downloadImageByMsg_content_completion_ProgressBlock(self,_cmd,msg,content,complete,arg4);
+}
+
+
+static void (* origin_BHMsgManager_downloadImageByMsg_content_imageSize_completion_ProgressBlock)(BHMsgManager *self,SEL _cmd , id arg1 , id arg2,long long arg3, id arg4 , id arg5);
+static void ( new_BHMsgManager_downloadImageByMsg_content_imageSize_completion_ProgressBlock)(BHMsgManager *self,SEL _cmd , id msg , id content , long long size, id complete , id arg5){
+    NSLog(@"downloadImage");
+    origin_BHMsgManager_downloadImageByMsg_content_imageSize_completion_ProgressBlock(self,_cmd,msg,content,size,complete,arg5);
+}
+
+
+static void (* origin_BHMsgManager_downloadImageByMsg_MD5_UUID_imageSize_ProgressBlock_completion)(BHMsgManager *self,SEL _cmd , id arg1 , id arg2 , id arg3,long long arg4, id arg5 , id arg6);
+static void ( new_BHMsgManager_downloadImageByMsg_MD5_UUID_imageSize_ProgressBlock_completion)(BHMsgManager *self,SEL _cmd , id msg , id md5 , id uuid, long long size, id Progress , id complete){
+    NSLog(@"downloadImage");
+    origin_BHMsgManager_downloadImageByMsg_MD5_UUID_imageSize_ProgressBlock_completion(self,_cmd,msg,md5,uuid,size,Progress,complete);
+}
+
+
+//GetImage
+static id (* origin_BHMsgManager__getImagePath_imageSize)(BHMsgManager *self,SEL _cmd , id arg1 , long long arg2);
+static id ( new_BHMsgManager__getImagePath_imageSize)(BHMsgManager *self,SEL _cmd , id arg1 , long long  arg2){
+    NSLog(@"getImage");
+    id thing = origin_BHMsgManager__getImagePath_imageSize(self,_cmd,arg1,arg2);
+    return thing;
+}
+
+static id (* origin_BHMsgManager_getImagePathByMD5_imageSize)(BHMsgManager *self,SEL _cmd , id arg1 , long long arg2);
+static id ( new_BHMsgManager_getImagePathByMD5_imageSize)(BHMsgManager *self,SEL _cmd , id arg1 , long long  arg2){
+    NSLog(@"getImage");
+    id thing = origin_BHMsgManager_getImagePathByMD5_imageSize(self,_cmd,arg1,arg2);
+    return thing;
+}
+
+static id (* origin_BHMsgManager_getImagePathByMsg_imageSize)(BHMsgManager *self,SEL _cmd , id arg1 , long long arg2);
+static id ( new_BHMsgManager_getImagePathByMsg_imageSize)(BHMsgManager *self,SEL _cmd , id arg1 , long long  arg2){
+    NSLog(@"getImage");
+    id thing = origin_BHMsgManager_getImagePathByMsg_imageSize(self,_cmd,arg1,arg2);
+    return thing;
+}
+
+
 static void __attribute__((constructor)) initialize(void) {
     
     NSLog(@"QQRedPackHelper：抢红包插件4.0 开启 ----------------------------------");
@@ -298,6 +390,14 @@ static void __attribute__((constructor)) initialize(void) {
     
     // 消息防撤回 2
     MSHookMessageEx(objc_getClass("MsgDbService"),  @selector(updateQQMessageModel:keyArray:), (IMP)&new_MsgDbService_updateMessageModel_keyArray, (IMP*)&origin_MsgDbService_updateMessageModel_keyArray);
+    
+    //添加图片
+    MSHookMessageEx(objc_getClass("BHCompoundMessagePacket"), @selector(addImageAtPath:burnAfterSending:), (IMP)&new_BHCompoundMessagePacket_addImageAtPath_burnAfterSending, (IMP*)&origin_BHCompoundMessagePacket_addImageAtPath_burnAfterSending);
+    
+    //发送消息
+    MSHookMessageEx(objc_getClass("BHMsgManager"), @selector(sendMessagePacket:target:completion:ProgressBlock:), (IMP)&new_BHMsgManager_sendMessagePacket_target_completion_ProgressBlock, (IMP*)&origin_BHMsgManager_sendMessagePacket_target_completion_ProgressBlock);
+    
+    
     
     // 接受消息响应
     MSHookMessageEx(objc_getClass("BHMsgManager"),  @selector(appendReceiveMessageModel:msgSource:), (IMP)&new_BHMsgManager_appendReceiveMessageModel_msgSource, (IMP*)&origin_BHMsgManager_appendReceiveMessageModel_msgSource);
@@ -318,4 +418,18 @@ static void __attribute__((constructor)) initialize(void) {
     // 开启本地服务器
     MSHookMessageEx(objc_getClass("AppController"), @selector(notifyLoginWithAccount:resultCode:userInfo:), (IMP)&new_AppController_notifyLoginWithAccount_resultCode_userInfo, (IMP *)&origin_AppController_notifyLoginWithAccount_resultCode_userInfo);
     MSHookMessageEx(objc_getClass("AppController"), @selector(notifyForceLogoutWithAccount:type:tips:), (IMP)&new_AppController_notifyForceLogoutWithAccount_type_tips, (IMP *)&origin_AppController_notifyForceLogoutWithAccount_type_tips);
+    
+    
+    
+    /*
+    //下载图片
+    MSHookMessageEx(objc_getClass("BHMsgManager"), @selector(downloadImageByMsg:content:completion:ProgressBlock:), (IMP)&new_BHMsgManager_downloadImageByMsg_content_completion_ProgressBlock, (IMP*)&origin_BHMsgManager_downloadImageByMsg_content_completion_ProgressBlock);
+    MSHookMessageEx(objc_getClass("BHMsgManager"), @selector(downloadImageByMsg:content:imageSize:completion:ProgressBlock:), (IMP)&new_BHMsgManager_downloadImageByMsg_content_imageSize_completion_ProgressBlock, (IMP*)&origin_BHMsgManager_downloadImageByMsg_content_imageSize_completion_ProgressBlock);
+    MSHookMessageEx(objc_getClass("BHMsgManager"), @selector(downloadImageByMsg:MD5:UUID:imageSize:ProgressBlock:completion:), (IMP)&new_BHMsgManager_downloadImageByMsg_MD5_UUID_imageSize_ProgressBlock_completion, (IMP*)&origin_BHMsgManager_downloadImageByMsg_MD5_UUID_imageSize_ProgressBlock_completion);
+
+    //GetImage
+    MSHookMessageEx(objc_getClass("BHMsgManager"), @selector(_getImagePath:imageSize:), (IMP)&new_BHMsgManager__getImagePath_imageSize, (IMP*)&origin_BHMsgManager__getImagePath_imageSize);
+    MSHookMessageEx(objc_getClass("BHMsgManager"), @selector(getImagePathByMD5:imageSize:), (IMP)&new_BHMsgManager_getImagePathByMD5_imageSize, (IMP*)&origin_BHMsgManager_getImagePathByMD5_imageSize);
+    MSHookMessageEx(objc_getClass("BHMsgManager"), @selector(getImagePathByMsg:imageSize:), (IMP)&new_BHMsgManager_getImagePathByMsg_imageSize, (IMP*)&origin_BHMsgManager_getImagePathByMsg_imageSize);
+     */
 }

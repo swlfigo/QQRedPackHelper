@@ -60,7 +60,7 @@ struct _BHMessageSession {
 @end
 
 @interface BHFriendGroupModel : NSObject
-@property(copy, nonatomic) NSString *groupName; 
+@property(copy, nonatomic) NSString *groupName;
 @end
 
 @interface BHGroupModel : NSObject
@@ -76,7 +76,7 @@ struct _BHMessageSession {
 
 @interface BHMessageModel : NSObject
 @property(nonatomic) unsigned int time;
-@property(nonatomic) int msgID; 
+@property(nonatomic) int msgID;
 @property(retain, nonatomic) NSString *groupCode;
 @property(retain, nonatomic) NSString *discussGroupUin;
 @property(readonly) BOOL isSelfSend;
@@ -85,6 +85,10 @@ struct _BHMessageSession {
 @property(retain, nonatomic) NSString *nickname;
 @property(copy, nonatomic) NSString *smallContent;
 @property(retain, nonatomic) NSString *uin;
+
+@property(nonatomic) unsigned int identityUin;
+
+
 @end
 
 @interface BHProfileModel : NSObject
@@ -125,6 +129,13 @@ struct _BHMessageSession {
 - (void)appendReceiveMessageModel:(id)arg1 msgSource:(long long)arg2;
 - (void)addTipsMessage:(id)arg1 sessType:(int)arg2 uin:(id)arg3 option:(id)arg4;
 - (id)sendMessagePacket:(id)arg1 target:(struct _BHMessageSession)arg2 completion:(id)arg3 ProgressBlock:(id)arg4;
+- (void)uploadImageWithFilePath:(id)arg1 session:(struct _BHMessageSession)arg2 completion:(id)arg3;
+- (void)downloadImageByMsg:(id)arg1 content:(id)arg2 imageSize:(long long)arg3 completion:(id)arg4 ProgressBlock:(id)arg5;
+- (void)downloadImageByMsg:(id)arg1 content:(id)arg2 completion:(id)arg3 ProgressBlock:(id)arg4;
+- (void)downloadImageByMsg:(id)arg1 MD5:(id)arg2 UUID:(id)arg3 imageSize:(long long)arg4 ProgressBlock:(id)arg5 completion:(id)arg6;
+- (id)_getImagePath:(id)arg1 imageSize:(long long)arg2;
+- (id)getImagePathByMD5:(id)arg1 imageSize:(long long)arg2;
+- (id)getImagePathByMsg:(id)arg1 imageSize:(long long)arg2;
 @end
 
 @interface MQAIOManager : NSObject
@@ -174,6 +185,7 @@ struct _BHMessageSession {
 @property(readonly, nonatomic) int msgType;
 @property(retain, nonatomic) BHFontInfo *fontInfo;
 - (void)addText:(id)arg1;
+- (void)addImageAtPath:(id)arg1 burnAfterSending:(BOOL)arg2;
 - (id)initWithMessageType:(int)arg1;
 @end
 
@@ -185,4 +197,20 @@ struct _BHMessageSession {
 
 + (void)openRedPackWithMsgModel:(BHMessageModel *)arg1 operation:(int)arg2;
 
+@end
+
+@interface MQUIUtils : NSObject
+
++ (id)getLocalImageWithPath:(id)arg1;
+
+@end
+
+
+@interface TChatImageManager : NSObject
+- (id)creatCacheModel:(id)arg1;
+- (void)updateCacheModelKey:(id)arg1 withNewKey:(id)arg2;
+- (void)removeCacheImage:(id)arg1;
+- (id)getCacheImage:(id)arg1;
+- (id)getCacheModel:(id)arg1;
+- (id)generateReferenceID;
 @end
