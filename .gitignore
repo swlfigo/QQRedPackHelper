@@ -33,3 +33,5 @@ DerivedData/
 Pods/
 #Target
 QQRedPackHelper/TargetApp
+.DS_Store 
+*/.DS_Store 
