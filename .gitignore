@@ -1,0 +1,8 @@
+/GTData.xcodeproj/xcuserdata/Gujs.xcuserdatad/xcschemes/xcschememanagement.plist
+/GTData.xcodeproj/xcuserdata
+*.xcuserdatad
+.DS_Store
+/GTData.xcworkspace/xcshareddata/WorkspaceSettings.xcsettings
+xcschemes
+#CocoaPods
+Pods/

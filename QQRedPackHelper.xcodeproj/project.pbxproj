@@ -106,6 +106,7 @@
 		0AD9123D2049A05D00F9E441 /* QQHelperSetting.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AD9123B2049A05D00F9E441 /* QQHelperSetting.m */; };
 		0ADF9AAB2026EB7E0048E625 /* QQRedPackHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 0ADF9AAA2026EB7E0048E625 /* QQRedPackHelper.h */; };
 		0ADF9AAD2026EB7E0048E625 /* QQRedPackHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ADF9AAC2026EB7E0048E625 /* QQRedPackHelper.m */; };
+		77B845CC52C0C8F7299566B1 /* libPods-QQRedPackHelper.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 14E38E4DB9A228AD50B841DF /* libPods-QQRedPackHelper.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -211,6 +212,9 @@
 		0ADF9AA92026EB7E0048E625 /* put mac app here */ = {isa = PBXFileReference; lastKnownFileType = text; name = "put mac app here"; path = "TargetApp/put mac app here"; sourceTree = "<group>"; };
 		0ADF9AAA2026EB7E0048E625 /* QQRedPackHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QQRedPackHelper.h; sourceTree = "<group>"; };
 		0ADF9AAC2026EB7E0048E625 /* QQRedPackHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QQRedPackHelper.m; sourceTree = "<group>"; };
+		14E38E4DB9A228AD50B841DF /* libPods-QQRedPackHelper.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-QQRedPackHelper.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		58F1AEDD80BDCB1D97AB3A4A /* Pods-QQRedPackHelper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QQRedPackHelper.debug.xcconfig"; path = "Target Support Files/Pods-QQRedPackHelper/Pods-QQRedPackHelper.debug.xcconfig"; sourceTree = "<group>"; };
+		59E1AED1246C926AD037259D /* Pods-QQRedPackHelper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QQRedPackHelper.release.xcconfig"; path = "Target Support Files/Pods-QQRedPackHelper/Pods-QQRedPackHelper.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -218,6 +222,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				77B845CC52C0C8F7299566B1 /* libPods-QQRedPackHelper.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -453,6 +458,8 @@
 			children = (
 				0ADF9AA72026EB7E0048E625 /* QQRedPackHelper */,
 				0ADF9AA62026EB7E0048E625 /* Products */,
+				3CC2EB038724A4E66EB9D731 /* Pods */,
+				CBF9C715212B7AB07181BAF6 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -498,6 +505,24 @@
 				0ADF9AA92026EB7E0048E625 /* put mac app here */,
 			);
 			name = TargetApp;
+			sourceTree = "<group>";
+		};
+		3CC2EB038724A4E66EB9D731 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				58F1AEDD80BDCB1D97AB3A4A /* Pods-QQRedPackHelper.debug.xcconfig */,
+				59E1AED1246C926AD037259D /* Pods-QQRedPackHelper.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		CBF9C715212B7AB07181BAF6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				14E38E4DB9A228AD50B841DF /* libPods-QQRedPackHelper.a */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -571,6 +596,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0ADF9AB02026EB7E0048E625 /* Build configuration list for PBXNativeTarget "QQRedPackHelper" */;
 			buildPhases = (
+				D2256772E56835A5EC0164D1 /* [CP] Check Pods Manifest.lock */,
 				0ADF9AA02026EB7E0048E625 /* Sources */,
 				0ADF9AA12026EB7E0048E625 /* Frameworks */,
 				0ADF9AA22026EB7E0048E625 /* Headers */,
@@ -630,6 +656,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = /opt/MonkeyDev/Tools/mpack.sh;
+		};
+		D2256772E56835A5EC0164D1 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-QQRedPackHelper-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -816,6 +864,7 @@
 		};
 		0ADF9AB12026EB7E0048E625 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 58F1AEDD80BDCB1D97AB3A4A /* Pods-QQRedPackHelper.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9TP25EGDF3;
@@ -841,6 +890,7 @@
 		};
 		0ADF9AB22026EB7E0048E625 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 59E1AED1246C926AD037259D /* Pods-QQRedPackHelper.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9TP25EGDF3;
