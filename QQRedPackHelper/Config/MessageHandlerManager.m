@@ -32,7 +32,8 @@
     }
     return self;
 }
-
+//图片域名:http://c2cpicdw.qpic.cn/
+//拼接字典中数据
 - (void)postMessageToServer:(NSDictionary *)infoDic{
     if (!infoDic) {
         return;
