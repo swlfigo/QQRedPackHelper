@@ -513,7 +513,6 @@
 				58F1AEDD80BDCB1D97AB3A4A /* Pods-QQRedPackHelper.debug.xcconfig */,
 				59E1AED1246C926AD037259D /* Pods-QQRedPackHelper.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -867,7 +866,7 @@
 			baseConfigurationReference = 58F1AEDD80BDCB1D97AB3A4A /* Pods-QQRedPackHelper.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 9TP25EGDF3;
+				DEVELOPMENT_TEAM = XAWR4AU4TQ;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				EXECUTABLE_PREFIX = lib;
@@ -893,7 +892,7 @@
 			baseConfigurationReference = 59E1AED1246C926AD037259D /* Pods-QQRedPackHelper.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 9TP25EGDF3;
+				DEVELOPMENT_TEAM = XAWR4AU4TQ;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				EXECUTABLE_PREFIX = lib;
