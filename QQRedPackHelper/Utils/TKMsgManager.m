@@ -10,7 +10,9 @@
 #import "QQPlugin.h"
 #import "TKWebServerManager.h"
 
-@interface TKMsgManager()
+@interface TKMsgManager(){
+    NSInteger cleanUnknownTime;
+}
 @property(nonatomic,strong)NSMutableDictionary *cacheDic;
 @end
 
@@ -21,6 +23,7 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         manager = [[TKMsgManager alloc] init];
+        
     });
     return manager;
 }
@@ -34,6 +37,8 @@
         _cacheDic[@"buddy"] = [[NSMutableArray alloc]init];
         _cacheDic[@"group"] = [[NSMutableArray alloc]init];
         _cacheDic[@"unknown"] = [[NSMutableArray alloc]init];
+        NSDate *datenow = [NSDate date];
+        _cleanUnknownTime =  [datenow timeIntervalSince1970];
     }
     return self;
 }
@@ -70,6 +75,12 @@
     NSMutableArray *unKnownArray = [[TKMsgManager shareManager]cacheDic][@"unknown"];
     if ([unKnownArray containsObject:toUserID]) {
         //列表中不包括这个人/号码
+        NSDate *datenow = [NSDate date];
+        NSInteger currentTime =  [datenow timeIntervalSince1970];
+        if (currentTime - [TKMsgManager shareManager].cleanUnknownTime > 1800) {
+            [unKnownArray removeAllObjects];
+            [TKMsgManager shareManager].cleanUnknownTime = currentTime;
+        }
         return;
     }
     BOOL canSendMessage = NO;

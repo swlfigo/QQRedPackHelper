@@ -115,7 +115,7 @@
     
     [self.webServer addHandlerForMethod:@"POST" path:@"/QQ-plugin/send-message" requestClass:[GCDWebServerDataRequest class] processBlock:^GCDWebServerResponse * _Nullable(__kindof GCDWebServerDataRequest * _Nonnull request) {
         NSDictionary *requestBody = [request jsonObject];
-        if (requestBody && requestBody[@"toUserID"] && [requestBody isKindOfClass:[NSDictionary class]]) {
+        if (requestBody && (requestBody[@"toUserID"] || requestBody[@"groupCode"]) && [requestBody isKindOfClass:[NSDictionary class]]) {
                    dispatch_async(dispatch_get_main_queue(), ^{
                        
                        [TKMsgManager sendMessageWithInfo:requestBody];

@@ -13,6 +13,7 @@
 //用于缓存好友列表与群聊ID
 + (instancetype)shareManager;
 @property(nonatomic,strong,readonly)NSMutableDictionary *cacheDic;
+@property(nonatomic,assign)NSInteger cleanUnknownTime;
 
 + (void)sendTextMessage:(NSString *)msg uin:(long long)uin sessionType:(int)type;
 
