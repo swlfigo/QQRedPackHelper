@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "QQPlugin.h"
 @interface TKWebServerManager : NSObject
 
 + (instancetype)shareManager;
@@ -15,4 +15,9 @@
 - (void)startServer;
 - (void)endServer;
 
+
+- (NSDictionary *)dictFromBuddySearchResult:(Buddy *)buddy;
+- (NSDictionary *)dictFromDiscussSearchResult:(Discuss *)discuss searcherInter:(ContactSearcherInter *)inter;
+- (NSDictionary *)dictFromGroupSearchResult:(Group *)group ;
+- (NSString *)avatarPathWithUIN:(NSString *)uin isUser:(BOOL)isUser ;
 @end

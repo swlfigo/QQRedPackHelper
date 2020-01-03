@@ -7,7 +7,7 @@
 //
 
 #import "TKWebServerManager.h"
-#import "QQPlugin.h"
+
 #import <GCDWebServer.h>
 #import <GCDWebServerDataResponse.h>
 #import <GCDWebServerURLEncodedFormRequest.h>
@@ -112,19 +112,51 @@
 }
 
 - (void)addHandleForSendMsg {
-    [self.webServer addHandlerForMethod:@"POST" path:@"/QQ-plugin/send-message" requestClass:[GCDWebServerURLEncodedFormRequest class] processBlock:^GCDWebServerResponse * _Nullable(__kindof GCDWebServerURLEncodedFormRequest * _Nonnull request) {
-        NSDictionary *requestBody = [request arguments];
-        if (requestBody && requestBody[@"userId"] && requestBody[@"content"]) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                long long uin = [requestBody[@"userId"] longLongValue];
-                int sessionType = [requestBody[@"type"] intValue];
-                [TKMsgManager sendTextMessage:requestBody[@"content"] uin:uin sessionType:sessionType];
-                
-            });
-            return [GCDWebServerResponse responseWithStatusCode:200];
-        }
-        return [GCDWebServerResponse responseWithStatusCode:404];
+    
+    [self.webServer addHandlerForMethod:@"POST" path:@"/QQ-plugin/send-message" requestClass:[GCDWebServerDataRequest class] processBlock:^GCDWebServerResponse * _Nullable(__kindof GCDWebServerDataRequest * _Nonnull request) {
+        NSDictionary *requestBody = [request jsonObject];
+        if (requestBody && requestBody[@"toUserID"] && [requestBody isKindOfClass:[NSDictionary class]]) {
+                   dispatch_async(dispatch_get_main_queue(), ^{
+                       
+                       [TKMsgManager sendMessageWithInfo:requestBody];
+                       
+                   });
+                   return [GCDWebServerResponse responseWithStatusCode:200];
+               }
+               return [GCDWebServerResponse responseWithStatusCode:404];
     }];
+    
+    
+//    [self.webServer addHandlerForMethod:@"POST" path:@"/QQ-plugin/send-message" requestClass:[GCDWebServerURLEncodedFormRequest class] processBlock:^GCDWebServerResponse * _Nullable(__kindof GCDWebServerURLEncodedFormRequest * _Nonnull request) {
+//        NSDictionary *requestBody = [request arguments];
+//       if (requestBody && requestBody[@"toUserID"]) {
+//                  dispatch_async(dispatch_get_main_queue(), ^{
+//
+//                      [TKMsgManager sendMessageWithInfo:requestBody];
+//
+//                  });
+//                  return [GCDWebServerResponse responseWithStatusCode:200];
+//              }
+//              return [GCDWebServerResponse responseWithStatusCode:404];
+//    }];
+    
+    
+    
+    
+    
+//    [self.webServer addHandlerForMethod:@"POST" path:@"/QQ-plugin/send-message" requestClass:[GCDWebServerURLEncodedFormRequest class] processBlock:^GCDWebServerResponse * _Nullable(__kindof GCDWebServerURLEncodedFormRequest * _Nonnull request) {
+//        NSDictionary *requestBody = [request arguments];
+//        if (requestBody && requestBody[@"userId"] && requestBody[@"content"]) {
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                long long uin = [requestBody[@"userId"] longLongValue];
+//                int sessionType = [requestBody[@"type"] intValue];
+//                [TKMsgManager sendTextMessage:requestBody[@"content"] uin:uin sessionType:sessionType];
+//
+//            });
+//            return [GCDWebServerResponse responseWithStatusCode:200];
+//        }
+//        return [GCDWebServerResponse responseWithStatusCode:404];
+//    }];
 }
 
 - (NSDictionary *)dictFromBuddySearchResult:(Buddy *)buddy {

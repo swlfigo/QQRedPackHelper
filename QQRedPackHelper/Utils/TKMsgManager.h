@@ -10,6 +10,12 @@
 
 @interface TKMsgManager : NSObject
 
+//用于缓存好友列表与群聊ID
++ (instancetype)shareManager;
+@property(nonatomic,strong,readonly)NSMutableDictionary *cacheDic;
+
 + (void)sendTextMessage:(NSString *)msg uin:(long long)uin sessionType:(int)type;
+
++ (void)sendMessageWithInfo:(NSDictionary*)messageInfo;
 
 @end

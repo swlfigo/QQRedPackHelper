@@ -343,13 +343,21 @@ static QQHelperSetting *instance = nil;
                 [msg appendString:obj[@"text"]];
             }else if([obj[@"msg-type"] integerValue] == 1){
                 //图片内容
-                infoDic[@"imgInfo"] = obj;
+                if (!infoDic[@"imgInfo"]) {
+                    infoDic[@"imgInfo"] = [[NSMutableArray alloc]init];
+                }
+                NSMutableArray *infoArray = infoDic[@"imgInfo"];
+                [infoArray addObject:obj];
+            }else if(IS_VALID_STRING(obj[@"text"]) && [obj[@"msg-type"] integerValue] == 1020){
+                //表情
+                [msg appendString:[NSString stringWithFormat:@"[表情:%@]",obj[@"text"]]];
             }else{
                 
             }
         }];
     }
     infoDic[@"message"] = msg?:@"";
+    
     [[MessageHandlerManager sharedInstance]postMessageToServer:infoDic];
     
     

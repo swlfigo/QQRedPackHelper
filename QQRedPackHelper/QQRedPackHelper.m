@@ -317,6 +317,7 @@ static void new_AppController_notifyForceLogoutWithAccount_type_tips(AppControll
  
  
  */
+//需要UIN是你的好友，否则发送失败
 static void (* origin_BHMsgManager_sendMessagePacket_target_completion_ProgressBlock)(BHMsgManager *self,SEL _cmd , id arg1 , struct _BHMessageSession arg2,id arg3, id arg4);
 static void new_BHMsgManager_sendMessagePacket_target_completion_ProgressBlock(BHMsgManager *self,SEL _cmd, BHCompoundMessagePacket *packet ,struct _BHMessageSession arg2 , id completeBlock , id progressBlock) {
     

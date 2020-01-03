@@ -29,6 +29,7 @@
         _manager = [AFHTTPSessionManager manager];
         _manager.responseSerializer = [AFJSONResponseSerializer serializer];//返回格式 JSON
         _manager.responseSerializer.acceptableContentTypes=[[NSSet alloc] initWithObjects:@"application/xml", @"text/xml",@"text/html", @"application/json",@"text/plain",nil];
+        _manager.requestSerializer = [AFJSONRequestSerializer serializer];
     }
     return self;
 }
