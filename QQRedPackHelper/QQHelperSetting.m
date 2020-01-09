@@ -357,8 +357,25 @@ static QQHelperSetting *instance = nil;
 //        }];
 //    }
 //    infoDic[@"message"] = msg?:@"";
+    //重建素材
+    //因为素材有可能会过期不能下载，需要获取本地缓存路径的
+    NSMutableArray *newMessagesArray = [[NSMutableArray alloc]initWithCapacity:msgContents.count];
+    for (NSDictionary *messageInfo in msgContents) {
+        NSMutableDictionary *dic = [[NSMutableDictionary alloc]initWithDictionary:messageInfo];
+        BHMsgManager *manager = [objc_getClass("BHMsgManager") sharedInstance];
+        if ([messageInfo[@"msg-type"] integerValue] == 1) {
+            //1是缩略图,不存在
+//            id path = [manager getImagePathByMD5:messageInfo[@"md5"] imageSize:1];
+            id path1 = [manager getImagePathByMD5:messageInfo[@"md5"] imageSize:0];
+            if (!messageInfo[@"url"] && path1) {
+                dic[@"localPath"] = path1;
+            }
+        }
+        [newMessagesArray addObject:dic];
+        
+    }
     if (msgContents.count) {
-        infoDic[@"message"] = msgContents;
+        infoDic[@"message"] = newMessagesArray;
     }else{
         infoDic[@"message"] = @[];
     }

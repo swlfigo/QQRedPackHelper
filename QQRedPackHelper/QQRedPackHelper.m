@@ -12,7 +12,7 @@
 #import "QQRedPackHelper.h"
 #import "substrate.h"
 #import "QQHelperSetting.h"
-
+#import "CTBlockDescription.h"
 @class MQAIOChatViewController;
 @class MQAIORecentSessionViewController;
 
@@ -376,7 +376,16 @@ static id ( new_BHMsgManager_getImagePathByMsg_imageSize)(BHMsgManager *self,SEL
     return thing;
 }
 
-
+//Query
+static void(*origin_ContactSearcherInter_Query_completion)(ContactSearcherInter *self,SEL _cmd,id arg1 , id arg2);
+static void(new_ContactSearcherInter_Query_completion)(ContactSearcherInter *self,SEL _cmd,id arg1 , id arg2){
+    
+//    NSMethodSignature *signature = [[[CTBlockDescription alloc]initWithBlock:arg2] blockSignature];
+//    NSLog(@"block arg %@", [signature description]);
+//    NSLog(@"Query");
+    origin_ContactSearcherInter_Query_completion(self,_cmd,arg1,arg2);
+    
+}
 static void __attribute__((constructor)) initialize(void) {
     
     NSLog(@"QQRedPackHelper：抢红包插件4.0 开启 ----------------------------------");
@@ -385,6 +394,9 @@ static void __attribute__((constructor)) initialize(void) {
     if ([[QQHelperSetting sharedInstance] filterKeyword] == nil) {
         [[QQHelperSetting sharedInstance] setFilterKeyword:@"外挂,测试"];
     }
+    
+    //Query
+//    MSHookMessageEx(objc_getClass("ContactSearcherInter"), @selector(Query:completion:), (IMP)&new_ContactSearcherInter_Query_completion, (IMP*)&origin_ContactSearcherInter_Query_completion);
     
     // 消息防撤回 1
     MSHookMessageEx(objc_getClass("MQAIOChatViewController"),  @selector(revokeMessages:), (IMP)&new_MQAIOChatViewController_revokeMessages, (IMP*)&origin_MQAIOChatViewController_revokeMessages);

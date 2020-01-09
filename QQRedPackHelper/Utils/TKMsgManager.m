@@ -69,7 +69,10 @@
 
 + (void)sendMessageWithInfo:(NSDictionary *)messageInfo{
     //发送的ID
-    NSString *toUserID = messageInfo[@"toUserID"];
+    NSString *toUserID = messageInfo[@"toUserID"]?:messageInfo[@"groupCode"];
+    if (!toUserID) {
+        return;
+    }
     NSMutableArray *buddyArray = [[TKMsgManager shareManager]cacheDic][@"buddy"];
     NSMutableArray *groupArray = [[TKMsgManager shareManager]cacheDic][@"group"];
     NSMutableArray *unKnownArray = [[TKMsgManager shareManager]cacheDic][@"unknown"];
@@ -90,13 +93,22 @@
         if (![groupArray containsObject:toUserID]) {
             //都不包含Code,寻找服务器
             ContactSearcherInter *inter = [[objc_getClass("ContactSearcherInter") alloc] init];
-            [inter Query:toUserID];
+            if ([inter respondsToSelector:@selector(Query:)]) {
+                [inter Query:toUserID];
+            }else if ([inter respondsToSelector:@selector(Query:completion:)]){
+                void(^queryBlock)(void) = ^{
+//                    NSLog(@"queryBlock");
+                };
+                [inter Query:toUserID completion:queryBlock];
+            }
             NSMutableArray *sessionList = [NSMutableArray array];
-            [inter.searchedDiscusses enumerateObjectsUsingBlock:^(Discuss * _Nonnull discuss, NSUInteger idx, BOOL * _Nonnull stop) {
+            NSMutableArray *tempDiscusses = [NSMutableArray arrayWithArray:inter.searchedDiscusses];
+            NSMutableArray *tempSearchedGroups = [NSMutableArray arrayWithArray:inter.searchedGroups];
+            [tempDiscusses enumerateObjectsUsingBlock:^(Discuss * _Nonnull discuss, NSUInteger idx, BOOL * _Nonnull stop) {
                 [sessionList addObject:[[TKWebServerManager shareManager] dictFromDiscussSearchResult:discuss searcherInter:inter]];
             }];
             
-            [inter.searchedGroups enumerateObjectsUsingBlock:^(Group * _Nonnull group, NSUInteger idx, BOOL * _Nonnull stop) {
+            [tempSearchedGroups enumerateObjectsUsingBlock:^(Group * _Nonnull group, NSUInteger idx, BOOL * _Nonnull stop) {
                 [sessionList addObject:[[TKWebServerManager shareManager] dictFromGroupSearchResult:group]];
             }];
             if (sessionList.count) {
@@ -116,9 +128,17 @@
         //个人
         if (![buddyArray containsObject:toUserID]) {
             ContactSearcherInter *inter = [[objc_getClass("ContactSearcherInter") alloc] init];
-                [inter Query:toUserID];
+                if ([inter respondsToSelector:@selector(Query:)]) {
+                    [inter Query:toUserID];
+                }else if ([inter respondsToSelector:@selector(Query:completion:)]){
+                    void(^queryBlock)(void) = ^{
+//                        NSLog(@"queryBlock");
+                    };
+                    [inter Query:toUserID completion:queryBlock];
+                }
                 NSMutableArray *sessionList = [NSMutableArray array];
-                [inter.searchedBuddys enumerateObjectsUsingBlock:^(Buddy * _Nonnull buddy, NSUInteger idx, BOOL * _Nonnull stop) {
+                NSMutableArray *tempSearchedBuddys = [NSMutableArray arrayWithArray:inter.searchedBuddys];
+                [tempSearchedBuddys enumerateObjectsUsingBlock:^(Buddy * _Nonnull buddy, NSUInteger idx, BOOL * _Nonnull stop) {
                     [sessionList addObject:[[TKWebServerManager shareManager]  dictFromBuddySearchResult:buddy]];
                 }];
             if (sessionList.count) {

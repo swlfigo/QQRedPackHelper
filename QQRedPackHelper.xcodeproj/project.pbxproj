@@ -106,6 +106,8 @@
 		0AD9123D2049A05D00F9E441 /* QQHelperSetting.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AD9123B2049A05D00F9E441 /* QQHelperSetting.m */; };
 		0ADF9AAB2026EB7E0048E625 /* QQRedPackHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 0ADF9AAA2026EB7E0048E625 /* QQRedPackHelper.h */; };
 		0ADF9AAD2026EB7E0048E625 /* QQRedPackHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ADF9AAC2026EB7E0048E625 /* QQRedPackHelper.m */; };
+		2C82AB3823C7285000A2DC54 /* CTBlockDescription.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C82AB3623C7284F00A2DC54 /* CTBlockDescription.h */; };
+		2C82AB3923C7285000A2DC54 /* CTBlockDescription.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C82AB3723C7285000A2DC54 /* CTBlockDescription.m */; };
 		2CE81CFB23BDF6C9004176A8 /* MessageHandlerManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 2CE81CF923BDF6C9004176A8 /* MessageHandlerManager.h */; };
 		2CE81CFC23BDF6C9004176A8 /* MessageHandlerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE81CFA23BDF6C9004176A8 /* MessageHandlerManager.m */; };
 		77B845CC52C0C8F7299566B1 /* libPods-QQRedPackHelper.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 14E38E4DB9A228AD50B841DF /* libPods-QQRedPackHelper.a */; };
@@ -215,6 +217,8 @@
 		0ADF9AAA2026EB7E0048E625 /* QQRedPackHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QQRedPackHelper.h; sourceTree = "<group>"; };
 		0ADF9AAC2026EB7E0048E625 /* QQRedPackHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QQRedPackHelper.m; sourceTree = "<group>"; };
 		14E38E4DB9A228AD50B841DF /* libPods-QQRedPackHelper.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-QQRedPackHelper.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2C82AB3623C7284F00A2DC54 /* CTBlockDescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTBlockDescription.h; sourceTree = "<group>"; };
+		2C82AB3723C7285000A2DC54 /* CTBlockDescription.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTBlockDescription.m; sourceTree = "<group>"; };
 		2CE81CF923BDF6C9004176A8 /* MessageHandlerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageHandlerManager.h; sourceTree = "<group>"; };
 		2CE81CFA23BDF6C9004176A8 /* MessageHandlerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageHandlerManager.m; sourceTree = "<group>"; };
 		58F1AEDD80BDCB1D97AB3A4A /* Pods-QQRedPackHelper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QQRedPackHelper.debug.xcconfig"; path = "Target Support Files/Pods-QQRedPackHelper/Pods-QQRedPackHelper.debug.xcconfig"; sourceTree = "<group>"; };
@@ -390,6 +394,8 @@
 		0AD7FE77209860F50030D9E4 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				2C82AB3623C7284F00A2DC54 /* CTBlockDescription.h */,
+				2C82AB3723C7285000A2DC54 /* CTBlockDescription.m */,
 				0AD7FE78209860F50030D9E4 /* TKHelper.h */,
 				0AD7FE79209860F50030D9E4 /* TKHelper.m */,
 				0AD7FE7A209860F50030D9E4 /* TKMsgManager.h */,
@@ -545,6 +551,7 @@
 				0A6471182059003B0016B677 /* ViewController+MASAdditions.h in Headers */,
 				0A947F65204A42C8000A681C /* QQHelperNotification.h in Headers */,
 				0A6471152059003B0016B677 /* View+MASAdditions.h in Headers */,
+				2C82AB3823C7285000A2DC54 /* CTBlockDescription.h in Headers */,
 				0AD7FE74209860910030D9E4 /* Color.h in Headers */,
 				0AD7FEB82098617A0030D9E4 /* GCDWebServerDataResponse.h in Headers */,
 				0A64712920591AFE0016B677 /* OtherView.h in Headers */,
@@ -710,6 +717,7 @@
 				0A6471162059003B0016B677 /* View+MASAdditions.m in Sources */,
 				0AD9070E2049957200F9E441 /* QQHelperMenu.m in Sources */,
 				0A6471052059003B0016B677 /* MASConstraint.m in Sources */,
+				2C82AB3923C7285000A2DC54 /* CTBlockDescription.m in Sources */,
 				0A6470E52058FC630016B677 /* QQHelperSegmentedControl.m in Sources */,
 				0AD7FE5B2098603E0030D9E4 /* TKAutoReplyCell.m in Sources */,
 				0A64710D2059003B0016B677 /* MASViewAttribute.m in Sources */,

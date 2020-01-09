@@ -179,6 +179,7 @@ struct _BHMessageSession {
 @property(retain, nonatomic) NSMutableArray <Discuss *> *searchedDiscusses;
 @property(retain, nonatomic) NSMutableArray <Group *> *searchedGroups;
 - (void)Query:(id)arg1;
+- (void)Query:(id)arg1 completion:(id)arg2;
 @end
 
 @interface BHCompoundMessagePacket : NSObject
