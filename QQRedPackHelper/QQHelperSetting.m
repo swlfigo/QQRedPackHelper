@@ -367,8 +367,12 @@ static QQHelperSetting *instance = nil;
             //1是缩略图,不存在
 //            id path = [manager getImagePathByMD5:messageInfo[@"md5"] imageSize:1];
             id path1 = [manager getImagePathByMD5:messageInfo[@"md5"] imageSize:0];
-            if (!messageInfo[@"url"] && path1) {
+            if (path1 && [[NSFileManager defaultManager]fileExistsAtPath:path1]) {
                 dic[@"localPath"] = path1;
+            }else{
+                if (!messageInfo[@"url"] && path1) {
+                    dic[@"localPath"] = path1;
+                }
             }
         }
         [newMessagesArray addObject:dic];
